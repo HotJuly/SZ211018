@@ -1,4 +1,5 @@
 /**app.wxss**/
+/* 此处用于书写整个小程序的全局样式 */
 .container {
   height: 100%;
   display: flex;

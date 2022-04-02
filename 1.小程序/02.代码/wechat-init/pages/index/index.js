@@ -2,6 +2,7 @@
 // 获取应用实例
 const app = getApp()
 
+// Page用于注册页面的实例对象
 Page({
   data: {
     motto: 'Hello World',
