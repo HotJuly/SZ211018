@@ -15,14 +15,19 @@ Page({
                     如果遇到Set数据类型,会拷贝变成数组
     */
     data: {
-        msg:123
+        msg:"我是初始化数据"
     },
 
     /**
      * 生命周期函数--监听页面加载
      */
     onLoad: function (options) {
-
+        console.log('msg1',this.data.msg)
+        // this.data.msg = "我是修改之后的数据"
+        this.setData({
+            msg : "我是修改之后的数据"
+        })
+        console.log('msg2',this.data.msg)
     },
 
     /**
