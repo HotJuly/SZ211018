@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <!-- <meta name="viewport" content="width=device-width,initial-scale=2"> -->
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <!-- <meta name="viewport" content="width=600"> -->
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        img{
+            /* width:187px; */
+            /* width:50%; */
+            /* width:50vw; */
+            width:8rem;
+        }
+        div{
+            width:200px;
+        }
+    </style>
+</head>
+<body>
+
+    <div>
+        <img src="./nvshen.jpg" alt="">
+    </div>
+    <script>
+        /*
+            移动端一共具有几个视口?
+                一共具有3个(真实存在的只有2个)
+                    1.布局视口
+                        当前页面上所有的内容都在布局视口上存在
+                            其实html元素就是布局视口
+
+                    2.视觉视口
+                        能看到多少东西,都由视觉视口决定
+                            其实手机屏幕就是视觉视口
+
+                    3.理想视口(又称为完美视口)
+                        理想视口不是一种真正的视口,而是一种特殊的状态
+                        当布局视口和视觉视口一样大的时候,那么称当前的状态为理想视口
+
+            问题:如何获取到布局视口的宽度?
+                document.documentElement.clientWidth
+                默认情况下,布局视口宽度980px,这个宽度是苹果公司设置的
+
+            问题二:想要实现理想视口状态,是让布局视口变小还是视觉视口变大?
+                布局视口变小,因为视觉视口(手机屏幕)是无法变化大小的
+
+            问题三:如何控制布局视口变大变小?
+                通过viewport标签即可
+                    width=device-width(将布局视口宽度设置为当前屏幕宽度)
+                    initial-scale = 0.5 = 视觉视口宽度/布局视口宽度
+
+                    注意:以上两个属性,谁计算出来的宽度更大,就以谁为准
+            
+            问题四:如何获取到视觉视口宽度?
+                1.通过viewport标签将布局视口宽度设置成与视觉视口相同的宽度
+                2.在通过clientWidth获取到布局视口的宽度
+
+
+            适配:
+                保证网页在不同尺寸的手机上展示的内容相同
+                1.使用px单位
+                    该单位不会随着屏幕的大小发生响应式变化,所以不适用
+                2.使用百分比
+                    该单位会随着父节点的宽度,高度发生变化
+                    虽然当前单位会发生动态变化,但是并不是跟着视觉视口变化的
+                3.使用vw和vh
+                    100vw = 屏幕100%的宽度
+                    100vh = 屏幕100%的高度
+                    该单位全局可见,而且会随着屏幕的宽度发生变化
+                4.使用rem
+                    该方案必须基于理想视口状态才能实现
+                    rem:root em(该单位的大小参考与根节点的字体大小)
+
+        */
+
+        // console.log('document.documentElement.clientWidth',document.documentElement.clientWidth)
+
+        // 1.获取到屏幕宽度
+        const width = document.documentElement.clientWidth;
+
+        // 2.获得屏幕百分之10的大小(这里的10可以是任意数字)
+        const fontSize = width/16;
+
+        // 3.将根节点的字体大小设置为屏幕十分之一的宽度
+        document.documentElement.style.fontSize = fontSize + "px";
+    </script>
+</body>
+</html>
