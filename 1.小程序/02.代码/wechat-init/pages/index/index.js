@@ -1,4 +1,5 @@
 // pages/index/index.js
+// 用于注册当前页面实例对象
 Page({
 
     /**

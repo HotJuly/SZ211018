@@ -1,7 +1,4 @@
 /* pages/index/index.wxss */
-page{
-    height:100%;
-}
 
 .indexContainer{
     height:100%;
