@@ -13,5 +13,10 @@
 <view class="indexContainer">
     <image class="avatarImg" src="/static/images/dazuo.jpeg"></image>
     <text class="username">你好,{{msg}}</text>
-    <button class="welcome">欢迎来到尚硅谷</button>
+    <!-- <view bindtap="handleClick1">
+        <button class="welcome" bind:tap="handleClick">欢迎来到尚硅谷</button>
+    </view> -->
+    <view bindtap="handleClick1">
+        <button class="welcome" capture-catch:tap="handleClick">欢迎来到尚硅谷</button>
+    </view>
 </view>
