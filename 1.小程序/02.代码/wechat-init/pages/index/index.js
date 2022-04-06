@@ -16,7 +16,8 @@ Page({
                     如果遇到Set数据类型,会拷贝变成数组
     */
     data: {
-        msg:"我是初始化数据"
+        msg:"我是初始化数据",
+        userInfo:{}
     },
 
     handleClick(){
@@ -39,6 +40,21 @@ Page({
             msg : "我是修改之后的数据"
         })
     },
+
+    getUserInfo(res){
+        // 无论用户点击允许还是拒绝都会触发
+        // 框架想要给开发者传递数据渠道有两个,1使用this,2使用形参
+        // console.log('getUserInfo',res)
+
+        // 如果成功获取到用户信息,就更新到data中进行显示
+
+        if(res.detail.userInfo){
+            // 小程序可以后续新增状态属性,但是不推荐
+            this.setData({
+                userInfo:res.detail.userInfo
+            })
+        }
+    },
     /**
      * 生命周期函数--监听页面加载
      */
@@ -49,34 +65,36 @@ Page({
         //     msg : "我是修改之后的数据"
         // })
         // console.log('msg2',this.data.msg)
+
+        // console.log('---------onLoad---------')
     },
 
     /**
      * 生命周期函数--监听页面初次渲染完成
      */
     onReady: function () {
-
+        // console.log('---------onReady---------')
     },
 
     /**
      * 生命周期函数--监听页面显示
      */
     onShow: function () {
-
+        // console.log('---------onShow---------')
     },
 
     /**
      * 生命周期函数--监听页面隐藏
      */
     onHide: function () {
-
+        // console.log('---------onHide---------')
     },
 
     /**
      * 生命周期函数--监听页面卸载
      */
     onUnload: function () {
-
+        // console.log('---------onUnload---------')
     },
 
     /**
