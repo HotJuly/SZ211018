@@ -55,6 +55,21 @@ Page({
             })
         }
     },
+
+    getUserProfile(){
+        wx.getUserProfile({
+            desc:"用于测试小程序登录功能",
+            success:(detail)=>{
+                // console.log('detail',detail)
+                this.setData({
+                    userInfo:detail.userInfo
+                })
+            },
+            fail(error){
+                console.log('fail',error)
+            }
+        })
+    },
     /**
      * 生命周期函数--监听页面加载
      */
@@ -67,6 +82,17 @@ Page({
         // console.log('msg2',this.data.msg)
 
         // console.log('---------onLoad---------')
+
+        // wx.getUserInfo({
+        //     success:(detail)=>{
+        //         // console.log('detail',detail)
+        //         this.setData({
+        //             userInfo:detail.userInfo
+        //         })
+        //     }
+        // })
+
+
     },
 
     /**
