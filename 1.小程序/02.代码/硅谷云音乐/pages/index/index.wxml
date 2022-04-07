@@ -6,35 +6,18 @@
     indicator-color="ivory"
     indicator-active-color="#d43c33"
     >
-        <swiper-item class="bannerItem">
-            <image class="bannerImg" src="/static/images/dazuo.jpeg"></image>
-        </swiper-item>
-        <swiper-item class="bannerItem">
-            <image class="bannerImg" src="/static/images/dazuo.jpeg"></image>
-        </swiper-item>
-        <swiper-item class="bannerItem">
-            <image class="bannerImg" src="/static/images/dazuo.jpeg"></image>
-        </swiper-item>
-        <swiper-item class="bannerItem">
-            <image class="bannerImg" src="/static/images/dazuo.jpeg"></image>
-        </swiper-item>
-        <swiper-item class="bannerItem">
-            <image class="bannerImg" src="/static/images/dazuo.jpeg"></image>
-        </swiper-item>
-        <swiper-item class="bannerItem">
-            <image class="bannerImg" src="/static/images/dazuo.jpeg"></image>
-        </swiper-item>
-        <swiper-item class="bannerItem">
-            <image class="bannerImg" src="/static/images/dazuo.jpeg"></image>
-        </swiper-item>
-        <swiper-item class="bannerItem">
-            <image class="bannerImg" src="/static/images/dazuo.jpeg"></image>
-        </swiper-item>
-        <swiper-item class="bannerItem">
-            <image class="bannerImg" src="/static/images/dazuo.jpeg"></image>
-        </swiper-item>
-        <swiper-item class="bannerItem">
-            <image class="bannerImg" src="/static/images/dazuo.jpeg"></image>
+        <!-- <swiper-item 
+        class="bannerItem"
+        v-for="(item,index) in banners"
+        :key="item.id"
+        > -->
+        <swiper-item 
+        class="bannerItem"
+        wx:for="{{banners}}"
+        wx:for-item="banner"
+        wx:key="bannerId"
+        >
+            <image class="bannerImg" src="{{banner.pic}}"></image>
         </swiper-item>
     </swiper>
 

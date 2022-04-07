@@ -5,7 +5,8 @@ Page({
      * 页面的初始数据
      */
     data: {
-
+        // 用于存储轮播图相关数据
+        banners:[]
     },
 
     /**
@@ -37,20 +38,23 @@ Page({
         // console.log('window',window)
         // console.log('wx',wx)
 
-        console.log(1)
+        // console.log(1)
         wx.request({
             url:"http://localhost:3000/banner",
             data:{
                 type:2
             },
-            success:()=>{
-                console.log('success')
+            success:(res)=>{
+                // console.log('success',res.data.banners)
+                this.setData({
+                    banners:res.data.banners
+                })
             },
             fail:()=>{
                 console.log('fail')
             }
         })
-        console.log(2)
+        // console.log(2)
     },
 
     /**
