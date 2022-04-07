@@ -1,0 +1,63 @@
+<view class="indexContainer">
+    <swiper 
+    class="bannerSwiper"
+    indicator-dots
+    circular
+    indicator-color="ivory"
+    indicator-active-color="#d43c33"
+    >
+        <swiper-item class="bannerItem">
+            <image class="bannerImg" src="/static/images/dazuo.jpeg"></image>
+        </swiper-item>
+        <swiper-item class="bannerItem">
+            <image class="bannerImg" src="/static/images/dazuo.jpeg"></image>
+        </swiper-item>
+        <swiper-item class="bannerItem">
+            <image class="bannerImg" src="/static/images/dazuo.jpeg"></image>
+        </swiper-item>
+        <swiper-item class="bannerItem">
+            <image class="bannerImg" src="/static/images/dazuo.jpeg"></image>
+        </swiper-item>
+        <swiper-item class="bannerItem">
+            <image class="bannerImg" src="/static/images/dazuo.jpeg"></image>
+        </swiper-item>
+        <swiper-item class="bannerItem">
+            <image class="bannerImg" src="/static/images/dazuo.jpeg"></image>
+        </swiper-item>
+        <swiper-item class="bannerItem">
+            <image class="bannerImg" src="/static/images/dazuo.jpeg"></image>
+        </swiper-item>
+        <swiper-item class="bannerItem">
+            <image class="bannerImg" src="/static/images/dazuo.jpeg"></image>
+        </swiper-item>
+        <swiper-item class="bannerItem">
+            <image class="bannerImg" src="/static/images/dazuo.jpeg"></image>
+        </swiper-item>
+        <swiper-item class="bannerItem">
+            <image class="bannerImg" src="/static/images/dazuo.jpeg"></image>
+        </swiper-item>
+    </swiper>
+
+    <view class="nav">
+        <view class="navItem">
+            <text class="iconfont icon-meirituijian-"></text>
+            <text class="navTitle">每日推荐</text>
+        </view>
+        <view class="navItem">
+            <text class="iconfont icon-gedan1"></text>
+            <text class="navTitle">歌单</text>
+        </view>
+        <view class="navItem">
+            <text class="iconfont icon-icon-ranking"></text>
+            <text class="navTitle">排行榜</text>
+        </view>
+        <view class="navItem">
+            <text class="iconfont icon-diantai"></text>
+            <text class="navTitle">电台</text>
+        </view>
+        <view class="navItem">
+            <text class="iconfont icon-zhiboguankanliangbofangsheyingshexiangjixianxing"></text>
+            <text class="navTitle">直播</text>
+        </view>
+    </view>
+</view>
