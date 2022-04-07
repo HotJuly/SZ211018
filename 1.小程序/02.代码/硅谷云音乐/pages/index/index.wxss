@@ -30,3 +30,75 @@
 .indexContainer .nav .navItem .navTitle{
     font-size:28rpx;
 }
+
+/*推荐歌曲区域开始*/
+.recommendContainer{
+    padding:0 20rpx;
+}
+
+.header .title{
+    font-size:28rpx;
+}
+
+.header .moreContent{
+    overflow: hidden;
+    /*
+        清除浮动的方法:
+            1.clear:both;
+            2.开启BFC(块级格式化上下文)
+                -overflow不为默认值即可
+                -float为left或者right
+                -position为absolute或者fixed
+                -display:inline-block,table,table-cell
+                -html根元素
+    */
+}
+
+.header .moreContent .moreTitle{
+    float:left;
+    font-size: 30rpx;
+}
+
+.header .moreContent .more{
+    float:right;
+    font-size: 24rpx;
+    border:1rpx solid;
+    padding:10rpx 20rpx;
+    border-radius: 15rpx;
+}
+
+.recommendContainer .recommendScroll{
+    display:flex;
+}
+
+.recommendContainer .recommendScroll .recommendItem{
+    margin-right: 20rpx;
+}
+
+.recommendContainer .recommendScroll .recommendItem .recommendImg{
+    width:200rpx;
+    height:200rpx;
+    border-radius: 20rpx;
+}
+
+.recommendContainer .recommendScroll .recommendItem .recommendTitle{
+    /*
+        单行文本溢出隐藏,并且显示省略号
+        width:200rpx;
+        white-space: nowrap;
+        overflow:hidden;
+        text-overflow:ellipsis;
+    */
+
+    width:200rpx;
+    height:80rpx;
+    overflow: hidden;
+    display:-webkit-box;
+    /* 告知几行之后需要溢出隐藏 */
+    -webkit-line-clamp: 2;
+
+    /* 告知文本的排列方向 */
+    -webkit-box-orient:vertical;
+}
+
+/*推荐歌曲区域结束*/

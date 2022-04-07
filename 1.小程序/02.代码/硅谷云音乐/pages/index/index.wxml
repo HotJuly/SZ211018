@@ -43,4 +43,28 @@
             <text class="navTitle">直播</text>
         </view>
     </view>
+
+    <view class="recommendContainer">
+        <view class="header">
+            <view class="title">推荐歌曲</view>
+            <view class="moreContent">
+                <view class="moreTitle">为你精心推荐</view>
+                <view class="more">查看更多</view>
+            </view>
+        </view>
+        <scroll-view 
+        class="recommendScroll" 
+        enable-flex
+        scroll-x
+        >
+            <view 
+            class="recommendItem"
+            wx:for="{{recommendList}}"
+            wx:key="id"
+            >
+                <image class="recommendImg" src="{{item.picUrl}}"></image>
+                <view class="recommendTitle">{{item.name}}</view>
+            </view>
+        </scroll-view>
+    </view>
 </view>
