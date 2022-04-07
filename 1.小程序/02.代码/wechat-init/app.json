@@ -9,5 +9,17 @@
         "navigationBarTextStyle": "white",
         "navigationStyle": "default"
     },
+    "plugins": {
+        "citySelector": {
+            "version": "1.0.1",
+            "provider": "wx63ffb7b7894e99ae"
+        }
+    },
+
+    "permission": {
+        "scope.userLocation": {
+            "desc": "你的位置信息将用于小程序定位"
+        }
+    },
     "sitemapLocation": "sitemap.json"
 }

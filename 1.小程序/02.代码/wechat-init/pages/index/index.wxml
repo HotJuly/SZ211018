@@ -27,8 +27,10 @@
     bindgetuserinfo="getUserInfo"
     >欢迎来到尚硅谷</button> -->
 
-    <button 
+    <!-- <button 
     class="welcome" 
     bindtap="getUserProfile"
-    >欢迎来到尚硅谷</button>
+    >欢迎来到尚硅谷</button> -->
+
+    <button class="welcome" bindtap="handleClick">欢迎来到{{city}}尚硅谷</button>
 </view>

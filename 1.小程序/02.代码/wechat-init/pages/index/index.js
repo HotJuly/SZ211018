@@ -1,5 +1,6 @@
 // pages/index/index.js
 // 用于注册当前页面实例对象
+const citySelector = requirePlugin('citySelector');
 Page({
 
     /**
@@ -16,11 +17,12 @@ Page({
                     如果遇到Set数据类型,会拷贝变成数组
     */
     data: {
-        msg:"我是初始化数据",
-        userInfo:{}
+        msg: "我是初始化数据",
+        city:"",
+        userInfo: {}
     },
 
-    handleClick(){
+    handleClick() {
         // console.log('handleClick')
 
         // wx.navigateTo({
@@ -28,45 +30,53 @@ Page({
         //     url:"/pages/log/log"
         // })
 
-        wx.redirectTo({
-            url:"../log/log"
-            // url:"/pages/log/log"
+        // wx.redirectTo({
+        //     url:"../log/log"
+        //     // url:"/pages/log/log"
+        // })
+
+        const key = 'BZ7BZ-QQWCU-DHWV2-BFJJG-B2JZF-KSBT3'; // 使用在腾讯位置服务申请的key
+        const referer = '七月入栈'; // 调用插件的app的名称
+        const hotCitys = '北京,上海,武汉,西安,深圳,泉州'; // 用户自定义的的热门城市
+
+        wx.navigateTo({
+            url: `plugin://citySelector/index?key=${key}&referer=${referer}&hotCitys=${hotCitys}`,
         })
     },
 
-    handleClick1(){
+    handleClick1() {
         // console.log('handleClick1')
         this.setData({
-            msg : "我是修改之后的数据"
+            msg: "我是修改之后的数据"
         })
     },
 
-    getUserInfo(res){
+    getUserInfo(res) {
         // 无论用户点击允许还是拒绝都会触发
         // 框架想要给开发者传递数据渠道有两个,1使用this,2使用形参
         // console.log('getUserInfo',res)
 
         // 如果成功获取到用户信息,就更新到data中进行显示
 
-        if(res.detail.userInfo){
+        if (res.detail.userInfo) {
             // 小程序可以后续新增状态属性,但是不推荐
             this.setData({
-                userInfo:res.detail.userInfo
+                userInfo: res.detail.userInfo
             })
         }
     },
 
-    getUserProfile(){
+    getUserProfile() {
         wx.getUserProfile({
-            desc:"用于测试小程序登录功能",
-            success:(detail)=>{
+            desc: "用于测试小程序登录功能",
+            success: (detail) => {
                 // console.log('detail',detail)
                 this.setData({
-                    userInfo:detail.userInfo
+                    userInfo: detail.userInfo
                 })
             },
-            fail(error){
-                console.log('fail',error)
+            fail(error) {
+                console.log('fail', error)
             }
         })
     },
@@ -107,6 +117,13 @@ Page({
      */
     onShow: function () {
         // console.log('---------onShow---------')
+        const selectedCity = citySelector.getCity();
+        // console.log(selectedCity)
+        if(selectedCity){
+            this.setData({
+                city:selectedCity.fullname
+            })
+        }
     },
 
     /**
