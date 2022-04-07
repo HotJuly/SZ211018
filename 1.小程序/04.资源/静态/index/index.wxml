@@ -1,0 +1,47 @@
+<view class="indexContainer">
+  <view class="topContainer">
+    <NavHeader title="排行榜" moreTitle="热歌风向标"/>
+    <swiper 
+    class="topSwiper"
+    next-margin="50"
+    snap-to-edge
+    >
+      <swiper-item>
+        <view class="topItem">
+          <view>
+            云音乐说唱榜
+          </view>
+          <view class="song">
+            <image class="songImg" src="/static/images/dazuo.jpeg" lazy-load></image>
+            <view class="songIndex">1</view>
+            <view class="songName">大佐天下第一</view>
+          </view>
+        </view>
+      </swiper-item>
+      <swiper-item>
+        <view class="topItem">
+          <view>
+            云音乐说唱榜
+          </view>
+          <view class="song">
+            <image class="songImg" src="/static/images/dazuo.jpeg" lazy-load></image>
+            <view class="songIndex">1</view>
+            <view class="songName">大佐天下第一</view>
+          </view>
+        </view>
+      </swiper-item>
+      <swiper-item>
+        <view class="topItem">
+          <view>
+            云音乐说唱榜
+          </view>
+          <view class="song">
+            <image class="songImg" src="/static/images/dazuo.jpeg" lazy-load></image>
+            <view class="songIndex">1</view>
+            <view class="songName">大佐天下第一</view>
+          </view>
+        </view>
+      </swiper-item>
+    </swiper>
+  </view>
+</view>
