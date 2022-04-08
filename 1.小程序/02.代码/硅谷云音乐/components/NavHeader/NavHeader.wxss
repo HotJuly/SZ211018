@@ -1,0 +1,30 @@
+.header .title{
+    font-size:28rpx;
+}
+
+.header .moreContent{
+    overflow: hidden;
+    /*
+        清除浮动的方法:
+            1.clear:both;
+            2.开启BFC(块级格式化上下文)
+                -overflow不为默认值即可
+                -float为left或者right
+                -position为absolute或者fixed
+                -display:inline-block,table,table-cell
+                -html根元素
+    */
+}
+
+.header .moreContent .moreTitle{
+    float:left;
+    font-size: 30rpx;
+}
+
+.header .moreContent .more{
+    float:right;
+    font-size: 24rpx;
+    border:1rpx solid;
+    padding:10rpx 20rpx;
+    border-radius: 15rpx;
+}

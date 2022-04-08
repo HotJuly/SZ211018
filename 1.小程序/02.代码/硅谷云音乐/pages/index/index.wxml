@@ -1,22 +1,11 @@
 <view class="indexContainer">
-    <swiper 
-    class="bannerSwiper"
-    indicator-dots
-    circular
-    indicator-color="ivory"
-    indicator-active-color="#d43c33"
-    >
+    <swiper class="bannerSwiper" indicator-dots circular indicator-color="ivory" indicator-active-color="#d43c33">
         <!-- <swiper-item 
         class="bannerItem"
         v-for="(item,index) in banners"
         :key="item.id"
         > -->
-        <swiper-item 
-        class="bannerItem"
-        wx:for="{{banners}}"
-        wx:for-item="banner"
-        wx:key="bannerId"
-        >
+        <swiper-item class="bannerItem" wx:for="{{banners}}" wx:for-item="banner" wx:key="bannerId">
             <image class="bannerImg" src="{{banner.pic}}"></image>
         </swiper-item>
     </swiper>
@@ -45,26 +34,46 @@
     </view>
 
     <view class="recommendContainer">
-        <view class="header">
+        <!-- <view class="header">
             <view class="title">推荐歌曲</view>
             <view class="moreContent">
                 <view class="moreTitle">为你精心推荐</view>
                 <view class="more">查看更多</view>
             </view>
-        </view>
-        <scroll-view 
-        class="recommendScroll" 
-        enable-flex
-        scroll-x
-        >
-            <view 
-            class="recommendItem"
-            wx:for="{{recommendList}}"
-            wx:key="id"
-            >
+        </view> -->
+        <NavHeader title="推荐歌曲" moreTitle="为你精心推荐" />
+        <scroll-view class="recommendScroll" enable-flex scroll-x>
+            <view class="recommendItem" wx:for="{{recommendList}}" wx:key="id">
                 <image class="recommendImg" src="{{item.picUrl}}"></image>
                 <view class="recommendTitle">{{item.name}}</view>
             </view>
         </scroll-view>
+    </view>
+
+    <view class="topContainer">
+        <NavHeader title="排行榜" moreTitle="热歌风向标" />
+        <swiper class="topSwiper" next-margin="50" snap-to-edge>
+            <swiper-item
+            wx:for="{{topList}}"
+            wx:key="id"
+            >
+                <view class="topItem">
+                    <view>
+                        {{item.name}}
+                    </view>
+                    <view 
+                    class="song"
+                    wx:for="{{item.list}}"
+                    wx:key="id"
+                    wx:for-item="song"
+                    wx:for-index="songIndex"
+                    >
+                        <image class="songImg" src="{{song.picUrl}}" lazy-load></image>
+                        <view class="songIndex">{{songIndex + 1}}</view>
+                        <view class="songName">{{song.name}}</view>
+                    </view>
+                </view>
+            </swiper-item>
+        </swiper>
     </view>
 </view>

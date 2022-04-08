@@ -10,7 +10,10 @@ Page({
         banners:[],
 
         // 用于存储推荐歌曲区域相关数据
-        recommendList:[]
+        recommendList:[],
+
+        // 用于存储排行榜区域的相关数据
+        topList:[]
     },
 
     /**
@@ -67,18 +70,18 @@ Page({
         })
 
         
-        wx.request({
-            url:"http://localhost:3000/personalized",
-            success:(res)=>{
-                // console.log('success',res)
-                this.setData({
-                    recommendList:res.data.result
-                })
-            },
-            fail:()=>{
-                console.log('fail')
-            }
-        })
+        // wx.request({
+        //     url:"http://localhost:3000/personalized",
+        //     success:(res)=>{
+        //         // console.log('success',res)
+        //         this.setData({
+        //             recommendList:res.data.result
+        //         })
+        //     },
+        //     fail:()=>{
+        //         console.log('fail')
+        //     }
+        // })
         
 
         const res1 = await myAxios('/personalized');
@@ -86,6 +89,29 @@ Page({
         this.setData({
             recommendList:res1.result
         })
+        
+
+        const topList = [];
+
+        // 准备请求的榜单的id
+        const arr = [2,6,7,10,23];
+
+        for(var i =0;i<arr.length;i++){
+            const res2 = await myAxios('/top/list',{idx:arr[i]});
+            // console.log('res2',res2)
+            const obj = {
+                id:res2.playlist.id,
+                name:res2.playlist.name,
+                list:res2.playlist.tracks.slice(0,3).map((item)=>{
+                    return item.al
+                })
+            }
+            // console.log('obj',obj)
+            topList.push(obj);
+            this.setData({
+                topList
+            })
+        }
     },
 
     /**
