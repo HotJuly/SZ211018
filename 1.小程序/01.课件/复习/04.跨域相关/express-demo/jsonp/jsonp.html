@@ -18,11 +18,6 @@
 
         btn.onclick=function(){
             let script = document.createElement('script');
-
-            // 1.通过script标签将前端的接受数据的函数名传给服务器
-            // 2.服务器接收到函数名,并将函数名与需要返回给前端的数据进行字符串拼接,生成对应的文本内容
-            // 3.服务器将拼接好的文本内容返回给前端,前端的script标签会将返回的文本当作js代码进行解析并执行
-            // 4.最终前端用于接收数据的函数会被调用,并得到服务器传入的数据
             script.src="http://localhost:5000/jsonp?callback=getData"
             document.body.appendChild(script);
         }
