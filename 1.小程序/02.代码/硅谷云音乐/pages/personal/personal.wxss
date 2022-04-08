@@ -172,9 +172,23 @@
   margin-top:20rpx;
 }
 
-.playList .noData{
+.noData{
   line-height:160rpx;
   text-indent: 40rpx;
+}
+
+.playContent .playScroll{
+  display:flex;
+  height:150rpx;
+}
+
+.playContent .playScroll .playItem{
+  margin-right:10rpx;
+}
+
+.playContent .playScroll .playItem .playImg{
+  width: 150rpx;
+  height:150rpx;
 }
 
 

@@ -1,4 +1,5 @@
 // pages/personal/personal.js
+import myAxios from '../../utils/myAxios';
 Page({
 
     /**
@@ -12,7 +13,10 @@ Page({
         moveTransition:"",
 
         // 用于存储用户的个人信息
-        userInfo:{}
+        userInfo:{},
+
+        // 用于存储用户的最新一周播放记录
+        playList:[]
     },
 
     handleTouchStart(event){
@@ -65,7 +69,7 @@ Page({
     /**
      * 生命周期函数--监听页面显示
      */
-    onShow: function () {
+    onShow:async function () {
         // tabBar页面的特点,tabBar页面一旦显示了,那么只会隐藏不会卸载
         // 所以大部分的tabBar页面的功能会考虑写在onShow中
 
@@ -74,6 +78,15 @@ Page({
         if(userInfo){
             this.setData({
                 userInfo
+            })
+
+            const result = await myAxios('/user/record',{uid:userInfo.userId});
+            // console.log('weekData',result.weekData)
+
+            this.setData({
+                playList:result.weekData.map((item)=>{
+                    return item.song.al;
+                })
             })
         }
     },
