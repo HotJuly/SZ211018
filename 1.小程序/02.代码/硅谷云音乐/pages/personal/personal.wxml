@@ -3,7 +3,7 @@
     <image class="bg" src="/static/images/personal/bgImg2.jpg"></image>
 
 
-    <view class="user-info-box">
+    <view class="user-info-box" bindtap="toLogin">
       <view class="portrait-box">
         <image class="portrait" src="/static/images/personal/missing-face.png"></image>
       </view>
@@ -30,9 +30,10 @@
 
   <view 
   class="cover-container"
-  style="transform:translateY({{moveDistance}}rpx)"
+  style="transform:translateY({{moveDistance}}rpx);transition:{{moveTransition}}"
   bindtouchstart="handleTouchStart"
   bindtouchmove="handleTouchMove"
+  bindtouchend="handleTouchEnd"
   >
     <image class="arc" src="/static/images/personal/arc.png"></image>
     <!-- 个人中心导航 -->
