@@ -9,7 +9,10 @@ Page({
         moveDistance:0,
 
         // 控制当前页面元素位移效果
-        moveTransition:""
+        moveTransition:"",
+
+        // 用于存储用户的个人信息
+        userInfo:{}
     },
 
     handleTouchStart(event){
@@ -63,7 +66,16 @@ Page({
      * 生命周期函数--监听页面显示
      */
     onShow: function () {
+        // tabBar页面的特点,tabBar页面一旦显示了,那么只会隐藏不会卸载
+        // 所以大部分的tabBar页面的功能会考虑写在onShow中
 
+        const userInfo = wx.getStorageSync('userInfo');
+        // console.log('userInfo',userInfo)
+        if(userInfo){
+            this.setData({
+                userInfo
+            })
+        }
     },
 
     /**

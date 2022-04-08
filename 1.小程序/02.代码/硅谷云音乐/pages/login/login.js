@@ -132,6 +132,12 @@ Page({
                 wx.showToast({
                     icon:"none",
                     title: "登录成功,即将跳转"
+                });
+
+                wx.setStorageSync("userInfo",result.profile);
+
+                wx.switchTab({
+                  url: '/pages/personal/personal',
                 })
             },
             400(){
