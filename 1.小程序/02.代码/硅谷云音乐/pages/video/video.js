@@ -14,6 +14,28 @@ Page({
 
         // 用于存储视频列表数据
         videoList: [],
+
+        // 用于控制scroll-view组件下拉动画的收起
+        isTrigger:false
+    },
+
+    // 用于请求导航列表的数据
+    async getNavList(){
+        const result = await myAxios('/video/group/list');
+        this.setData({
+            navList: result.data.slice(0, 13),
+            navId: result.data[0].id
+            // 错误写法:
+            // navId:this.data.navList[0].id
+        })
+    },
+
+    async handlePullDown(){
+        // console.log('handlePullDown')
+        await this.getVideoList();
+        this.setData({
+            isTrigger:false
+        })
     },
 
     // 该方法仅用于测试暂停视频播放API,不是本项目的功能
@@ -104,13 +126,9 @@ Page({
      * 生命周期函数--监听页面显示
      */
     onShow: async function () {
-        const result = await myAxios('/video/group/list');
-        this.setData({
-            navList: result.data.slice(0, 13),
-            navId: result.data[0].id
-            // 错误写法:
-            // navId:this.data.navList[0].id
-        })
+
+        // 发送请求获取最新的导航列表数据
+        await this.getNavList();
 
         // 发送请求获取最新的视频列表数据
         this.getVideoList();
@@ -133,8 +151,14 @@ Page({
     /**
      * 页面相关事件处理函数--监听用户下拉动作
      */
-    onPullDownRefresh: function () {
+    onPullDownRefresh:async function () {
+        // console.log('onPullDownRefresh')
 
+        // 发送请求获取最新的导航列表数据
+        await this.getNavList();
+
+        // 发送请求获取最新的视频列表数据
+        this.getVideoList();
     },
 
     /**

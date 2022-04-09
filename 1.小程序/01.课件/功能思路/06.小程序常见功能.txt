@@ -1,0 +1,31 @@
+需求:当用户下拉页面/组件时候,自动请求最新的数据进行展示(简称:下拉刷新)
+拆解:
+	1.当用户下拉页面/组件时候
+		触发下拉的渠道
+			下拉页面
+				效果:刷新整个页面所有的数据
+				流程:
+					1.如果想要使用下拉页面效果,就必须开启下拉页面的动画效果
+						开启方式有两种:
+							1.在app.json->window->enablePullDownRefresh:true
+								该种方法会开启所有页面的下拉动画
+
+							2.在页面的json文件->enablePullDownRefresh:true
+								该种方法只会开启指定页面的下拉动画
+
+					2.通过onPullDownRefresh监听可以监视当前页面下拉操作
+						当用户下拉页面之后,就会执行对应的回调函数
+
+			下拉scroll-view组件
+				效果:刷新视频列表区域数据
+				流程:
+					1.通过给scroll-view组件添加标签属性refresher-enabled,可以开启scroll-view组件的下拉动画
+						问题:虽然refresher-enabled可以开启下拉动画,但是数据请求结束之后,动画并不会自动收起
+
+					2.通过状态数据控制标签属性refresher-triggered,来实现下拉动画的收起效果
+
+					3.通过给scroll-view组件绑定refresherrefresh事件,就可以见识到scroll-view区域的下拉操作
+
+	2.自动请求最新的数据进行展示
+		在早上写的功能中,已经封装了一个getVideoList函数
+		调用该函数就可以请求到当前最新的数据

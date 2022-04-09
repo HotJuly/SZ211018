@@ -22,7 +22,13 @@
   </scroll-view>
 
   <!-- videoList区域 -->
-  <scroll-view class="videoList" scroll-y>
+  <scroll-view 
+  class="videoList" 
+  scroll-y
+  refresher-enabled
+  refresher-triggered="{{isTrigger}}"
+  bindrefresherrefresh="handlePullDown"
+  >
     <view
     class="videoItem"
     wx:for="{{videoList}}"
