@@ -35,11 +35,21 @@
     wx:key="vid"
     >
       <video 
+      wx:if="{{currentId === item.vid}}"
       id="{{item.vid}}"
       bindplay="handlePlay" 
       class="common" 
       src="{{item.urlInfo.url}}"
       ></video>
+
+      <image
+      wx:else
+      id="{{item.vid}}"
+      class="common" 
+      src="{{item.coverUrl}}"
+      bindtap="changeCurrentId"
+      ></image>
+
       <view class="content">{{item.title}}</view>
       <view class="footer">
         <image class="avatar" src="{{item.creator.avatarUrl}}"></image>
@@ -53,7 +63,12 @@
             <text class="iconfont icon-pinglun1"></text>
             <text class="count">{{item.commentCount}}</text>
           </text>
-          <button class="item btn">
+          <button 
+          class="item btn" 
+          open-type="share"
+          data-title="{{item.title}}"
+          data-imageUrl="{{item.coverUrl}}"
+          >
             <text class="iconfont icon-gengduo"></text>
           </button>
         </view>
