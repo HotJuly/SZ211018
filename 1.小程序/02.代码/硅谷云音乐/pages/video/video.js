@@ -16,6 +16,32 @@ Page({
         videoList: [],
     },
 
+    // 该方法仅用于测试暂停视频播放API,不是本项目的功能
+    testAPI(){
+        // console.log('testAPI')
+        const vid = '6079942F18A2160EF7CEC24827886C7F';
+
+        const videoContext = wx.createVideoContext(vid);
+        videoContext.pause();
+    },
+
+    // 用于监视视频的播放操作
+    handlePlay(event){
+        // console.log('handlePlay',this.oldVId)
+
+        // 1.获取到当前正在播放的视频id
+        const vid = event.currentTarget.id;
+
+        // 判断是否具有上一个视频,而且上一个视频是否就是当前这一个视频
+        if(this.oldVId&&this.oldVId!==vid){
+            const videoContext = wx.createVideoContext(this.oldVId);
+            videoContext.pause();
+        }
+
+        //2.将当前本次的id留给下次使用
+        this.oldVId = vid;
+    },
+
     // 用于监视用户点击导航栏列表,切换navId
     async changeNavId(event) {
         /*
