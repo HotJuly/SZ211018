@@ -1,5 +1,6 @@
 // pages/video/video.js
 import myAxios from '../../utils/myAxios';
+import hasPermission from '../../utils/hasPermission';
 Page({
 
     /**
@@ -150,6 +151,8 @@ Page({
      * 生命周期函数--监听页面显示
      */
     onShow: async function () {
+
+        // if(!hasPermission())return;
 
         // 发送请求获取最新的导航列表数据
         await this.getNavList();
