@@ -98,7 +98,8 @@ Page({
         //    4.发送请求
         const result = await myAxios('/login/cellphone', {
             phone,
-            password
+            password,
+            _isLogin:true
         });
         // console.log('result',result)
 
