@@ -13,6 +13,14 @@ Page({
         recommendList:[]
     },
 
+    toSong(event){
+        // console.log('toSong');
+        const song = event.currentTarget.dataset.song;
+        wx.navigateTo({
+          url: `/pages/song/song?songId=${song.id}`,
+        })
+    },
+
     /**
      * 生命周期函数--监听页面加载
      */

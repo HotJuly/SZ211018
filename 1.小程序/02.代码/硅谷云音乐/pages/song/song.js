@@ -6,13 +6,34 @@ Page({
      */
     data: {
 
+        // 用于控制页面的C3效果切换
+        isPlay:false,
+
+        // 用于存储当前页面的歌曲详细信息
+        songObj:{}
     },
 
     /**
      * 生命周期函数--监听页面加载
      */
-    onLoad: function (options) {
+    onLoad:async function (options) {
+        // console.log('options',options.songId)
+        // console.log()
+        // const song = JSON.parse(options.song);
 
+        const songId = options.songId;
+
+        const result = await this.$myAxios('/song/detail',{ids:songId});
+        // console.log(result)
+
+        // 通过API动态设置当前页面的导航栏标题
+        wx.setNavigationBarTitle({
+            title:result.songs[0].name
+        })
+
+        this.setData({
+            songObj:result.songs[0]
+        })
     },
 
     /**
