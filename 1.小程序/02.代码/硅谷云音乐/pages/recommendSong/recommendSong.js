@@ -1,4 +1,5 @@
 // pages/recommendSong/recommendSong.js
+import PubSub from 'pubsub-js';
 Page({
 
     /**
@@ -44,16 +45,22 @@ Page({
 
         const day = date.getDate();
         const month = date.getMonth() + 1;
-        this.setData({
-            day,
-            month
-        })
 
-        const {recommend} = await this.$myAxios('/recommend/songs');
+        if(day !== this.data.day && month !== this.data.month){
 
-        this.setData({
-            recommendList:recommend
-        })
+            this.setData({
+                day,
+                month
+            })
+    
+            const {recommend} = await this.$myAxios('/recommend/songs');
+    
+            this.setData({
+                recommendList:recommend
+            })
+        }
+
+        console.log('PubSub',PubSub);
     },
 
     /**
