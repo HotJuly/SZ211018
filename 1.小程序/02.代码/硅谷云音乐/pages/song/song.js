@@ -26,38 +26,19 @@ Page({
         // console.log('switchType')
         const type = event.currentTarget.id;
 
-        // 准备工作3
-        this.$PubSub.subscribe('sendId',(msg,songId)=>{
-            // console.log('sendId',songId)
-            this.setData({
-                songId
-            });
-
-            const promise1 = this.getMusicDetail();
-            const promise2 = this.getMusicUrl();
-
-            Promise.all([promise1,promise2])
-            .then(()=>{
-                this.backgroundAudioManager.src=this.data.musicUrl;
-                this.backgroundAudioManager.title=this.data.songObj.name;
-
-                this.setData({
-                    isPlay:true
-                })
-            })
-
-            
-        })
-
         // 流程1,将用户点击的按钮标识传递给每日推荐页面
         this.$PubSub.publish('switchType',type);
     },
 
     // 用于监视用户点击播放按钮,实现播放功能
-    handlePlay(){
+    async handlePlay(){
         // console.log('handlePlay')
 
         // const backgroundAudioManager = wx.getBackgroundAudioManager();
+
+        if(!this.data.musicUrl){
+            await this.getMusicUrl();
+        }
 
         if(this.data.isPlay){
             // 能进入这里就说明当前歌曲正在播放
@@ -67,6 +48,7 @@ Page({
             appInstance.globalData.playState = false;
         }else{
             // 能进入这里就说明当前歌曲处于暂停
+
 
             this.backgroundAudioManager.src=this.data.musicUrl;
             this.backgroundAudioManager.title=this.data.songObj.name;
@@ -124,7 +106,7 @@ Page({
         this.getMusicDetail();
 
         // 封装请求歌曲链接的函数
-        this.getMusicUrl();
+        // this.getMusicUrl();
 
         // 以下代码用于测试app实例对象的数据读写
         // console.log('msg1',appInstance.globalData.msg)
@@ -141,6 +123,28 @@ Page({
                 isPlay:true
             })
         }
+
+        // 准备工作3
+        this.token = this.$PubSub.subscribe('sendId',(msg,songId)=>{
+            // console.log('sendId',songId)
+            this.setData({
+                songId
+            });
+
+            const promise1 = this.getMusicDetail();
+            const promise2 = this.getMusicUrl();
+
+            Promise.all([promise1,promise2])
+            .then(()=>{
+                this.backgroundAudioManager.src=this.data.musicUrl;
+                this.backgroundAudioManager.title=this.data.songObj.name;
+
+                this.setData({
+                    isPlay:true
+                })
+            })
+
+        })
     },
 
     /**
@@ -168,7 +172,7 @@ Page({
      * 生命周期函数--监听页面卸载
      */
     onUnload: function () {
-
+        this.$PubSub.unsubscribe(this.token);
     },
 
     /**

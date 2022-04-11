@@ -36,7 +36,7 @@ Page({
      */
     onLoad: function (options) {
         // 准备工作1
-        this.$PubSub.subscribe('switchType',(msg,type)=>{
+        this.token = this.$PubSub.subscribe('switchType',(msg,type)=>{
             // PubSub订阅函数第一个实参是消息名称,第二个实参才是真正传递过来的数据
             // console.log('switchType',msg,type)
 
@@ -113,7 +113,7 @@ Page({
      * 生命周期函数--监听页面卸载
      */
     onUnload: function () {
-
+        this.$PubSub.unsubscribe(this.token);
     },
 
     /**

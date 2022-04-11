@@ -71,6 +71,7 @@
 
 					订阅	->	PubSub.subscribe(消息名称, 接收数据的回调函数)
 					发布	->	PubSub.publish(消息名称, 需要发送出去的数据);
+					解绑	->	PubSub.unsubscribe(订阅消息时候返回的token)
 
 					npm包使用流程:
 						1.初始化package.json文件
