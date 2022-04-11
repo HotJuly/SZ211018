@@ -28,5 +28,10 @@ App({
 
       return PageFn(config)
     }
+  },
+  globalData:{
+    playState:false,
+    audioId:null,
+    msg:"我是全局初始化的数据msg"
   }
 })

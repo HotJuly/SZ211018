@@ -1,4 +1,6 @@
 // pages/song/song.js
+
+const appInstance = getApp();
 Page({
 
     /**
@@ -10,7 +12,37 @@ Page({
         isPlay:false,
 
         // 用于存储当前页面的歌曲详细信息
-        songObj:{}
+        songObj:{},
+
+        // 用于存储当前页面的歌曲链接
+        musicUrl:null
+    },
+
+    // 用于监视用户点击播放按钮,实现播放功能
+    handlePlay(){
+        // console.log('handlePlay')
+
+        const backgroundAudioManager = wx.getBackgroundAudioManager();
+
+        if(this.data.isPlay){
+            // 能进入这里就说明当前歌曲正在播放
+            backgroundAudioManager.pause();
+
+            // appInstance.globalData.audioId = this.data.songObj.id;
+            appInstance.globalData.playState = false;
+        }else{
+            // 能进入这里就说明当前歌曲处于暂停
+
+            backgroundAudioManager.src=this.data.musicUrl;
+            backgroundAudioManager.title=this.data.songObj.name;
+
+            appInstance.globalData.audioId = this.data.songObj.id;
+            appInstance.globalData.playState = true;
+        }
+
+        this.setData({
+            isPlay:!this.data.isPlay
+        })
     },
 
     /**
@@ -34,6 +66,27 @@ Page({
         this.setData({
             songObj:result.songs[0]
         })
+
+        const result2 = await this.$myAxios('/song/url',{id:songId});
+        this.setData({
+            musicUrl:result2.data[0].url
+        })
+
+        // 以下代码用于测试app实例对象的数据读写
+        // console.log('msg1',appInstance.globalData.msg)
+        // appInstance.globalData.msg="我是修改之后的全局数据"
+        // console.log('msg2',appInstance.globalData.msg)
+
+        // 获取背景音频相关信息
+        const {audioId,playState} = appInstance.globalData;
+        console.log(audioId,songId)
+
+        // 比较背景音频与当前歌曲的id,如果相同,将isPlay更新为true
+        if(playState&&Number(audioId)===Number(songId)){
+            this.setData({
+                isPlay:true
+            })
+        }
     },
 
     /**
