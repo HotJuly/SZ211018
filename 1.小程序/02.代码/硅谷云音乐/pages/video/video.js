@@ -1,6 +1,5 @@
 // pages/video/video.js
 import myAxios from '../../utils/myAxios';
-import hasPermission from '../../utils/hasPermission';
 Page({
 
     /**
@@ -22,6 +21,8 @@ Page({
         // 用于控制页面上video组件的显示隐藏
         currentId:null
     },
+
+    // $myAxios: myAxios,
 
     // 用于改变currentId,实现video组件和image组件之间的切换效果
     changeCurrentId(event){
@@ -46,7 +47,7 @@ Page({
 
     // 用于请求导航列表的数据
     async getNavList() {
-        const result = await myAxios('/video/group/list');
+        const result = await this.$myAxios('/video/group/list');
         this.setData({
             navList: result.data.slice(0, 13),
             navId: result.data[0].id
@@ -202,11 +203,13 @@ Page({
         from,
         target
     }) {
-        console.log('onShareAppMessage', from, target)
+        // console.log('onShareAppMessage', from, target)
         /*
             通过形参中的from属性,可以判断用户触发转发的渠道
                 如果from==="menu",就说明用户点击的是右上角转发按钮
                 如果from==="button",就说明用户点击的是button组件转发的
+            
+            通过形参中的target属性,可以获取到触发当前分享的button组件相关信息
         */
         if (from === "menu") {
             //    能进入这里说明用户点击了右上角转发按钮
