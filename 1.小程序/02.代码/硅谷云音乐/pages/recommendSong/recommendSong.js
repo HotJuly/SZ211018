@@ -1,5 +1,5 @@
 // pages/recommendSong/recommendSong.js
-import PubSub from 'pubsub-js';
+// import PubSub from 'pubsub-js';
 Page({
 
     /**
@@ -11,12 +11,21 @@ Page({
         month:"--",
 
         // 用于存储当前的每日推荐列表数据
-        recommendList:[]
+        recommendList:[],
+
+        // 用于存储用户当前查看的歌曲下标
+        currentIndex:null
     },
 
     toSong(event){
         // console.log('toSong');
-        const song = event.currentTarget.dataset.song;
+        const {song,index} = event.currentTarget.dataset;
+
+        // 准备工作2
+        this.setData({
+            currentIndex:index
+        })
+
         wx.navigateTo({
           url: `/pages/song/song?songId=${song.id}`,
         })
@@ -26,7 +35,39 @@ Page({
      * 生命周期函数--监听页面加载
      */
     onLoad: function (options) {
+        // 准备工作1
+        this.$PubSub.subscribe('switchType',(msg,type)=>{
+            // PubSub订阅函数第一个实参是消息名称,第二个实参才是真正传递过来的数据
+            // console.log('switchType',msg,type)
 
+            //流程2:根据song页面发过来的标识,找到对应的歌曲id
+            let {recommendList , currentIndex}= this.data;
+            if(type==="pre"){
+                // 能进入这里就说明用户点击了上一首
+                if(currentIndex===0){
+                    currentIndex = recommendList.length-1;
+                }else{
+                    currentIndex--;
+                }
+            }else{
+                // 能进入这里就说明用户点击了下一首
+                if(currentIndex===recommendList.length-1){
+                    currentIndex = 0;
+                }else{
+                    currentIndex++;
+                }
+            }
+
+            const id = recommendList[currentIndex].id;
+            // console.log(id)
+
+            this.setData({
+                currentIndex
+            })
+
+            // 流程3:将找到的id,发送给song页面
+            this.$PubSub.publish('sendId',id);
+        })
     },
 
     /**
@@ -59,8 +100,6 @@ Page({
                 recommendList:recommend
             })
         }
-
-        console.log('PubSub',PubSub);
     },
 
     /**

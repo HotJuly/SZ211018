@@ -1,4 +1,6 @@
 // app.js
+import PubSub from 'pubsub-js';
+
 import utilConfig from './utils/config';
 import myAxios from './utils/myAxios';
 import hasPermission from './utils/hasPermission';
@@ -23,6 +25,8 @@ App({
       }
 
       config.$myAxios = myAxios;
+
+      config.$PubSub = PubSub;
 
       // config.$API = API
 

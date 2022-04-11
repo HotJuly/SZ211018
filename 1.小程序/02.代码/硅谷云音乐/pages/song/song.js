@@ -15,26 +15,61 @@ Page({
         songObj:{},
 
         // 用于存储当前页面的歌曲链接
-        musicUrl:null
+        musicUrl:null,
+
+        // 用于存储当前页面的歌曲id
+        songId:null
+    },
+
+    // 用于监视用户点击上一首/下一首按钮,并实现切换歌曲功能
+    switchType(event){
+        // console.log('switchType')
+        const type = event.currentTarget.id;
+
+        // 准备工作3
+        this.$PubSub.subscribe('sendId',(msg,songId)=>{
+            // console.log('sendId',songId)
+            this.setData({
+                songId
+            });
+
+            const promise1 = this.getMusicDetail();
+            const promise2 = this.getMusicUrl();
+
+            Promise.all([promise1,promise2])
+            .then(()=>{
+                this.backgroundAudioManager.src=this.data.musicUrl;
+                this.backgroundAudioManager.title=this.data.songObj.name;
+
+                this.setData({
+                    isPlay:true
+                })
+            })
+
+            
+        })
+
+        // 流程1,将用户点击的按钮标识传递给每日推荐页面
+        this.$PubSub.publish('switchType',type);
     },
 
     // 用于监视用户点击播放按钮,实现播放功能
     handlePlay(){
         // console.log('handlePlay')
 
-        const backgroundAudioManager = wx.getBackgroundAudioManager();
+        // const backgroundAudioManager = wx.getBackgroundAudioManager();
 
         if(this.data.isPlay){
             // 能进入这里就说明当前歌曲正在播放
-            backgroundAudioManager.pause();
+            this.backgroundAudioManager.pause();
 
             // appInstance.globalData.audioId = this.data.songObj.id;
             appInstance.globalData.playState = false;
         }else{
             // 能进入这里就说明当前歌曲处于暂停
 
-            backgroundAudioManager.src=this.data.musicUrl;
-            backgroundAudioManager.title=this.data.songObj.name;
+            this.backgroundAudioManager.src=this.data.musicUrl;
+            this.backgroundAudioManager.title=this.data.songObj.name;
 
             appInstance.globalData.audioId = this.data.songObj.id;
             appInstance.globalData.playState = true;
@@ -42,6 +77,29 @@ Page({
 
         this.setData({
             isPlay:!this.data.isPlay
+        })
+    },
+
+    // 用于请求当前歌曲的详细信息
+    async getMusicDetail(){
+        const result = await this.$myAxios('/song/detail',{ids:this.data.songId});
+        // console.log(result)
+
+        // 通过API动态设置当前页面的导航栏标题
+        wx.setNavigationBarTitle({
+            title:result.songs[0].name
+        })
+
+        this.setData({
+            songObj:result.songs[0]
+        })
+    },
+
+    // 用于请求当前歌曲的音频链接
+    async getMusicUrl(){
+        const result2 = await this.$myAxios('/song/url',{id:this.data.songId});
+        this.setData({
+            musicUrl:result2.data[0].url
         })
     },
 
@@ -55,22 +113,18 @@ Page({
 
         const songId = options.songId;
 
-        const result = await this.$myAxios('/song/detail',{ids:songId});
-        // console.log(result)
-
-        // 通过API动态设置当前页面的导航栏标题
-        wx.setNavigationBarTitle({
-            title:result.songs[0].name
-        })
-
         this.setData({
-            songObj:result.songs[0]
+            songId
         })
 
-        const result2 = await this.$myAxios('/song/url',{id:songId});
-        this.setData({
-            musicUrl:result2.data[0].url
-        })
+        this.backgroundAudioManager = wx.getBackgroundAudioManager();
+
+        // 流程4:封装请求函数
+        // 封装请求歌曲详细信息的函数
+        this.getMusicDetail();
+
+        // 封装请求歌曲链接的函数
+        this.getMusicUrl();
 
         // 以下代码用于测试app实例对象的数据读写
         // console.log('msg1',appInstance.globalData.msg)
@@ -79,7 +133,7 @@ Page({
 
         // 获取背景音频相关信息
         const {audioId,playState} = appInstance.globalData;
-        console.log(audioId,songId)
+        // console.log(audioId,songId)
 
         // 比较背景音频与当前歌曲的id,如果相同,将isPlay更新为true
         if(playState&&Number(audioId)===Number(songId)){
