@@ -46,6 +46,12 @@
         ],
         "independent":true
     }],
+    "preloadRule":{
+        "pages/index/index":{
+            "packages": ["songs"],
+            "network":"all"
+        }
+    },
     "style": "v2",
     "sitemapLocation": "sitemap.json"
 }
