@@ -37,4 +37,18 @@
   font-size: 24rpx;
   margin: 0 20rpx;
 }
+.indexContainer .navScroll {
+  display: flex;
+}
+.indexContainer .navScroll .navItem {
+  width: 140rpx;
+  height: 80rpx;
+  font-size: 28rpx;
+  flex-shrink: 0;
+  text-align: center;
+  line-height: 80rpx;
+}
+.indexContainer .navScroll .navItem.active {
+  border-bottom: 4rpx solid #f00;
+}
 
