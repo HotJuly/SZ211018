@@ -1,5 +1,5 @@
 // pages/song/song.js
-
+import dayjs from 'dayjs';
 const appInstance = getApp();
 Page({
 
@@ -18,7 +18,63 @@ Page({
         musicUrl:null,
 
         // 用于存储当前页面的歌曲id
-        songId:null
+        songId:null,
+
+        // 用于存储当前歌曲的播放进度
+        currentWidth:0,
+
+        // 用于存储当前歌曲的时间进度
+        currentTime:"00:00",
+
+        // 用于存储当前歌曲的总时长
+        durationTime:"--:--"
+    },
+
+    // 用于监视背景音频的状态变化
+    addEvent(){
+        // 用于监视背景音频是否处于播放状态
+        // 注意:onPlay是一个函数,调用的时候需要传入回调函数
+        this.backgroundAudioManager.onPlay(()=>{
+            // console.log('onPlay')
+
+            // appInstance.globalData.audioId = this.data.songObj.id;
+            appInstance.globalData.playState = true;
+
+            // 并不是所有播放的时候,都要更新当前页面的播放状态
+            // 因为很有可能,用户听着歌曲A,看着歌曲B页面,此时即便暂停或者播放歌曲A,都不应该影响到当前页面的播放状态
+
+            if(appInstance.globalData.audioId === this.data.songId){
+                this.setData({
+                    isPlay:true
+                })
+            }
+        })
+
+        // 用于监视背景音频是否处于暂停状态
+        this.backgroundAudioManager.onPause(()=>{
+            // console.log('onPause')
+
+            appInstance.globalData.playState = false;
+            
+            if(appInstance.globalData.audioId === this.data.songId){
+                this.setData({
+                    isPlay:false
+                })
+            }
+        })
+
+        // 用于监视背景音频进度是否正在更新
+        this.backgroundAudioManager.onTimeUpdate(()=>{
+            // console.log('onTimeUpdate')
+            // 从背景音频管理器实例身上获取到当前歌曲的时间,单位为秒
+            // 从背景音频管理器实例身上获取到当前歌曲的总时长,单位为秒
+            const {currentTime,duration} = this.backgroundAudioManager;
+
+            this.setData({
+                currentWidth:currentTime/duration*100,
+                currentTime:dayjs(currentTime*1000).format('mm:ss')
+            })
+        })
     },
 
     // 用于监视用户点击上一首/下一首按钮,并实现切换歌曲功能
@@ -44,8 +100,8 @@ Page({
             // 能进入这里就说明当前歌曲正在播放
             this.backgroundAudioManager.pause();
 
-            // appInstance.globalData.audioId = this.data.songObj.id;
-            appInstance.globalData.playState = false;
+            // 由于最新代码中,已经通过onPlay和onPause事件监视了背景音频的播放暂停,所以此处可以不需要记录音频播放状态
+            // appInstance.globalData.playState = false;
         }else{
             // 能进入这里就说明当前歌曲处于暂停
 
@@ -53,8 +109,9 @@ Page({
             this.backgroundAudioManager.src=this.data.musicUrl;
             this.backgroundAudioManager.title=this.data.songObj.name;
 
+            // 由于最新代码中,已经通过onPlay和onPause事件监视了背景音频的播放暂停,所以此处可以不需要记录音频播放状态
             appInstance.globalData.audioId = this.data.songObj.id;
-            appInstance.globalData.playState = true;
+            // appInstance.globalData.playState = true;
         }
 
         this.setData({
@@ -73,7 +130,8 @@ Page({
         })
 
         this.setData({
-            songObj:result.songs[0]
+            songObj:result.songs[0],
+            durationTime:dayjs(result.songs[0].dt).format("mm:ss")
         })
     },
 
@@ -93,7 +151,7 @@ Page({
         // console.log()
         // const song = JSON.parse(options.song);
 
-        const songId = options.songId;
+        const songId = options.songId*1;
 
         this.setData({
             songId
@@ -145,6 +203,9 @@ Page({
             })
 
         })
+
+        // 绑定与背景音频相关的监听
+        this.addEvent();
     },
 
     /**

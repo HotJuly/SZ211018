@@ -4,6 +4,7 @@
   "description": "",
   "main": ".eslintrc.js",
   "dependencies": {
+    "dayjs": "^1.11.0",
     "pubsub-js": "^1.9.4"
   },
   "scripts": {
