@@ -27,7 +27,7 @@ Page({
         })
 
         wx.navigateTo({
-          url: `/pages/song/song?songId=${song.id}`,
+          url: `/songs/pages/song/song?songId=${song.id}`,
         })
     },
 
