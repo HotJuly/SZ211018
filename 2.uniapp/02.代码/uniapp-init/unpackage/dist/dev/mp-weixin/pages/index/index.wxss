@@ -1,24 +1,40 @@
-
-.content {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	justify-content: center;
+.indexContainer .header {
+  display: flex;
+  align-items: center;
+  padding-top: 20rpx;
 }
-.logo {
-	height: 200rpx;
-	width: 200rpx;
-	margin-top: 200rpx;
-	margin-left: auto;
-	margin-right: auto;
-	margin-bottom: 50rpx;
+.indexContainer .header .logo {
+  width: 118rpx;
+  height: 40rpx;
+  margin: 0 20rpx;
 }
-.text-area {
-	display: flex;
-	justify-content: center;
+.indexContainer .header .search {
+  position: relative;
+  height: 60rpx;
+  background-color: #ccc;
+  border-radius: 10rpx;
+  padding-left: 60rpx;
+  flex-grow: 1;
 }
-.title {
-	font-size: 36rpx;
-	color: #8f8f94;
+.indexContainer .header .search .iconfont {
+  position: absolute;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+          transform: translateY(-50%);
+  left: 20rpx;
+}
+.indexContainer .header .search .searchInput {
+  height: 100%;
+}
+.indexContainer .header .search .searchInput .placeholder {
+  font-size: 24rpx;
+  text-align: center;
+  text-indent: -60rpx;
+}
+.indexContainer .header .username {
+  width: 140rpx;
+  height: 60rpx;
+  font-size: 24rpx;
+  margin: 0 20rpx;
 }
 
