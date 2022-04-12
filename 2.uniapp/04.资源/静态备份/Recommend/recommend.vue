@@ -78,7 +78,7 @@
 </template>
 
 <script>
-	import CategoryList from '../categoryList/categoryList.vue';
+	import CategoryList from '../CategoryList/CategoryList.vue';
 	export default{
 		name:"Recommend",
 		components:{
