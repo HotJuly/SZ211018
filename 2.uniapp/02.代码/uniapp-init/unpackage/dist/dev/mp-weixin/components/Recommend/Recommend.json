@@ -1,0 +1,6 @@
+{
+  "usingComponents": {
+    "category-list": "/components/CategoryList/CategoryList"
+  },
+  "component": true
+}

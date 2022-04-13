@@ -1,5 +1,7 @@
 import App from './App'
 import myAxios from 'utils/myAxios.js';
+import store from './store/index.js';
+
 import Vue from 'vue'
 Vue.config.productionTip = false
 
@@ -10,7 +12,8 @@ App.mpType = 'app'
 Vue.prototype.$myAxios = myAxios;
 
 const app = new Vue({
-    ...App
+    ...App,
+	store
 
 	// onLaunch: function() {
 	// 	console.log('App Launch')

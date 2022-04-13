@@ -101,6 +101,32 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "recyclableRender", function() { return recyclableRender; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "components", function() { return components; });
 var components
+try {
+  components = {
+    Recommend: function() {
+      return __webpack_require__.e(/*! import() | components/Recommend/Recommend */ "components/Recommend/Recommend").then(__webpack_require__.bind(null, /*! @/components/Recommend/Recommend.vue */ 29))
+    },
+    CateList: function() {
+      return __webpack_require__.e(/*! import() | components/CateList/CateList */ "components/CateList/CateList").then(__webpack_require__.bind(null, /*! @/components/CateList/CateList.vue */ 34))
+    }
+  }
+} catch (e) {
+  if (
+    e.message.indexOf("Cannot find module") !== -1 &&
+    e.message.indexOf(".vue") !== -1
+  ) {
+    console.error(e.message)
+    console.error("1. 排查组件名称拼写是否正确")
+    console.error(
+      "2. 排查组件是否符合 easycom 规范，文档：https://uniapp.dcloud.net.cn/collocation/pages?id=easycom"
+    )
+    console.error(
+      "3. 若组件不符合 easycom 规范，需手动引入，并在 components 中注册该组件"
+    )
+  } else {
+    throw e
+  }
+}
 var render = function() {
   var _vm = this
   var _h = _vm.$createElement
@@ -136,33 +162,56 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _regenerator = _interopRequireDefault(__webpack_require__(/*! ./node_modules/@babel/runtime/regenerator */ 23));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};} //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-var _default =
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _regenerator = _interopRequireDefault(__webpack_require__(/*! ./node_modules/@babel/runtime/regenerator */ 23));
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+var _vuex = __webpack_require__(/*! vuex */ 27);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function ownKeys(object, enumerableOnly) {var keys = Object.keys(object);if (Object.getOwnPropertySymbols) {var symbols = Object.getOwnPropertySymbols(object);if (enumerableOnly) symbols = symbols.filter(function (sym) {return Object.getOwnPropertyDescriptor(object, sym).enumerable;});keys.push.apply(keys, symbols);}return keys;}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};if (i % 2) {ownKeys(Object(source), true).forEach(function (key) {_defineProperty(target, key, source[key]);});} else if (Object.getOwnPropertyDescriptors) {Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));} else {ownKeys(Object(source)).forEach(function (key) {Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));});}}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};}var Recommend = function Recommend() {__webpack_require__.e(/*! require.ensure | components/Recommend/Recommend */ "components/Recommend/Recommend").then((function () {return resolve(__webpack_require__(/*! ../../components/Recommend/Recommend.vue */ 29));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var CateList = function CateList() {__webpack_require__.e(/*! require.ensure | components/CateList/CateList */ "components/CateList/CateList").then((function () {return resolve(__webpack_require__(/*! ../../components/CateList/CateList.vue */ 34));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default =
+
+
 {
   data: function data() {
     return {
-      indexData: {} };
+      // indexData: {}
+      navIndex: -1 };
 
   },
   /*
@@ -179,40 +228,37 @@ var _default =
      		3.往哪发
      			通过服务器中注册的路由信息,可以查看到
      */
-  created: function created() {var _this = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee() {var result;return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:_context.next = 2;return (
+  created: function created() {var _this = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee() {return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:
+              // console.log('created')
+              /*
+              	知识点整理
+              		组件
+              			使用小程序的组件
+              		API
+              			使用小程序的API,也可以使用uni专用API(推荐)
+              		响应式单位
+              			使用小程序的rpx,也可以使用uni专用upx(推荐)
+              			
+              		指令和模版解析语法
+              			使用Vue的语法
+              		状态数据更新语法
+              			使用Vue的语法
+              		生命周期
+              			Vue或者小程序都可以
+              
+              */
 
+              // const result = await this.$myAxios('/getIndexData');
+              // // console.log('result',result)
+              // this.indexData = result;
 
+              // console.log(1,this.$store.state.home.initData)
+              // console.log(2,this.initData2)
+              // console.log(3,this.initData3)
+              // console.log(4,this.initData)
+              // console.log(5,this.initData5)
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                _this.$myAxios('/getIndexData'));case 2:result = _context.sent;
-              // console.log('result',result)
-              _this.indexData = result;case 4:case "end":return _context.stop();}}}, _callee);}))();
+              _this.getIndexData();case 1:case "end":return _context.stop();}}}, _callee);}))();
   },
   // onLoad() {
   // 	console.log('onLoad')
@@ -220,7 +266,64 @@ var _default =
   // mounted() {
   // 	console.log('mounted')
   // },
-  methods: {} };exports.default = _default;
+  methods: _objectSpread({
+    changeNavIndex: function changeNavIndex(index) {
+      this.navIndex = index;
+    } },
+  (0, _vuex.mapActions)("home", ["getIndexData"])),
+
+  computed: _objectSpread({},
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  (0, _vuex.mapState)("home", ["indexData"])),
+
+  watch: {},
+
+
+  components: {
+    CateList: CateList,
+    Recommend: Recommend } };exports.default = _default;
 
 /***/ }),
 /* 18 */

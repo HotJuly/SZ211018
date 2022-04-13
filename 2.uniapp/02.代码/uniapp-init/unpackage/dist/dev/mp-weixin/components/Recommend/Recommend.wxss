@@ -1,0 +1,33 @@
+.recommendContainer .bannerSwiper .bannerImg {
+  width: 100%;
+  height: 100%;
+}
+.recommendContainer .policyDescList {
+  display: flex;
+  justify-content: space-around;
+}
+.recommendContainer .policyDescList .policyDescItem image {
+  width: 32rpx;
+  height: 32rpx;
+  vertical-align: middle;
+}
+.recommendContainer .policyDescList .policyDescItem text {
+  font-size: 24rpx;
+  vertical-align: middle;
+}
+.recommendContainer .nav {
+  display: flex;
+  flex-wrap: wrap;
+}
+.recommendContainer .nav .navItem {
+  width: 20%;
+  text-align: center;
+}
+.recommendContainer .nav .navItem image {
+  width: 110rpx;
+  height: 110rpx;
+}
+.recommendContainer .nav .navItem view {
+  font-size: 24rpx;
+}
+

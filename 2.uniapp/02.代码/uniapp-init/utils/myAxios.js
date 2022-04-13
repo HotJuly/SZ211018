@@ -15,8 +15,6 @@
 
 */
 
-
-
 const envObj = {
 	devtools:'http://localhost:3000',
 	ios:'/api',
