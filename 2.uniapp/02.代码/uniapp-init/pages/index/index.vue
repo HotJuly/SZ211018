@@ -29,8 +29,10 @@
 			>{{ item.text }}</view>
 		</scroll-view>
 		
-		<Recommend v-if="navIndex===-1"></Recommend>
-		<CateList v-else></CateList>
+		<scroll-view class="contentScroll" scroll-y="true" >
+			<Recommend v-if="navIndex===-1"></Recommend>
+			<CateList v-else></CateList>
+		</scroll-view>
 	</view>
 	
 	<!-- <div>
@@ -210,4 +212,7 @@ export default {
 			line-height 80upx
 			&.active
 				border-bottom 4upx solid red
+	.contentScroll
+		height calc( 100vh - 80upx - 84upx - var(--window-top) - var(--window-bottom))
+		
 </style>

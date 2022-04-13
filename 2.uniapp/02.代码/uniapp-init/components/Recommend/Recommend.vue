@@ -14,75 +14,43 @@
 		
 		<!-- policyDescList区域 -->
 		<view class="policyDescList">
-			<view class="policyDescItem">
-				<image src="https://yanxuan.nosdn.127.net/a03dd909803b9ac032eba58b7253a2f6.png" mode=""></image>
-				<text>网易严选品牌</text>
-			</view>
-			<view class="policyDescItem">
-				<image src="https://yanxuan.nosdn.127.net/a03dd909803b9ac032eba58b7253a2f6.png" mode=""></image>
-				<text>网易严选品牌</text>
-			</view>
-			<view class="policyDescItem">
-				<image src="https://yanxuan.nosdn.127.net/a03dd909803b9ac032eba58b7253a2f6.png" mode=""></image>
-				<text>网易严选品牌</text>
+			<view 
+			class="policyDescItem"
+			v-for="item in indexData.policyDescList"
+			:key="item.desc"
+			>
+				<image :src="item.icon" mode=""></image>
+				<text>{{item.desc}}</text>
 			</view>
 		</view>
 		
 		<!-- nav区域 -->
-		<view class="nav">
-			<view class="navItem">
-				<image src="https://yanxuan.nosdn.127.net/fede8b110c502ec5799702d5ec824792.png" mode=""></image>
-				<view>居家生活</view>
-			</view>
-			<view class="navItem">
-				<image src="https://yanxuan.nosdn.127.net/fede8b110c502ec5799702d5ec824792.png" mode=""></image>
-				<view>居家生活</view>
-			</view>
-			<view class="navItem">
-				<image src="https://yanxuan.nosdn.127.net/fede8b110c502ec5799702d5ec824792.png" mode=""></image>
-				<view>居家生活</view>
-			</view>
-			<view class="navItem">
-				<image src="https://yanxuan.nosdn.127.net/fede8b110c502ec5799702d5ec824792.png" mode=""></image>
-				<view>居家生活</view>
-			</view>
-			<view class="navItem">
-				<image src="https://yanxuan.nosdn.127.net/fede8b110c502ec5799702d5ec824792.png" mode=""></image>
-				<view>居家生活</view>
-			</view>
-			<view class="navItem">
-				<image src="https://yanxuan.nosdn.127.net/fede8b110c502ec5799702d5ec824792.png" mode=""></image>
-				<view>居家生活</view>
-			</view>
-			<view class="navItem">
-				<image src="https://yanxuan.nosdn.127.net/fede8b110c502ec5799702d5ec824792.png" mode=""></image>
-				<view>居家生活</view>
-			</view>
-			<view class="navItem">
-				<image src="https://yanxuan.nosdn.127.net/fede8b110c502ec5799702d5ec824792.png" mode=""></image>
-				<view>居家生活</view>
-			</view>
-			<view class="navItem">
-				<image src="https://yanxuan.nosdn.127.net/fede8b110c502ec5799702d5ec824792.png" mode=""></image>
-				<view>居家生活</view>
-			</view>
-			<view class="navItem">
-				<image src="https://yanxuan.nosdn.127.net/fede8b110c502ec5799702d5ec824792.png" mode=""></image>
-				<view>居家生活</view>
+		<view class="nav" v-if="indexData.kingKongModule">
+			<view 
+			class="navItem"
+			v-for="item in indexData.kingKongModule.kingKongList"
+			:key="item.L1Id"
+			>
+				<image :src="item.picUrl" mode=""></image>
+				<view>{{item.text}}</view>
 			</view>
 		</view>
 		
 		<!-- CategoryList导航指南区域 -->
-		<CategoryList />
+		<CategoryList v-for="(categoryObj,index) in indexData.categoryModule" :key="index" :categoryObj="categoryObj" />
 	</view>
 </template>
 
 <script>
+	import {mapState} from 'vuex';
 	import CategoryList from '../CategoryList/CategoryList.vue';
 	export default{
 		name:"Recommend",
 		components:{
 			CategoryList
+		},
+		computed:{
+			...mapState("home",["indexData"])
 		}
 	}
 </script>
