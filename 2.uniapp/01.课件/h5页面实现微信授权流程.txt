@@ -1,0 +1,35 @@
+参考网址:https://blog.csdn.net/z9061/article/details/105988489
+
+流程:
+	1.当用户点击h5页面上的微信授权按钮,此时会控制当前页面进行跳转
+		需要做的准备工作:
+			1.callbackURL 
+				该地址由后端提供,该接口可以接收到微信官方发回的用户信息数据
+				如果真的授权成功,那么微信官方会将用户信息交给公司服务器
+			2.state
+				暂时不去考虑
+			3.wechatid
+				该id是以公司名义申请的appid
+
+			4.微信官方授权网址
+				该网址从微信官方文档中获取
+				例如:https://open.weixin.qq.com/connect/oauth2/authorize?appid=${wechatId}&redirect_uri=${callbackURL}&response_type=code&scope=snsapi_userinfo&state=${state}#wechat_redirect
+			
+		正式开始:
+			使用window.location.href=微信官方授权网址,可以控制浏览器请求该网址(向微信官方发送请求)
+
+	2.此时,浏览器会控制当前手机自动打开微信APP,微信APP会弹出用户授权窗口,询问用户是否允许授权
+
+	3.如果用户点击允许授权,此时会回到浏览器中,流程1中的请求返回响应,响应的内容就是将当前浏览器地址重定向到流程1中准备的callbackURL
+			在重定向的过程中,微信官方会将用户的临时登录凭证以query字符串的形式,拼接在callbackURL之后
+
+		注意:也就是说此时浏览器会向公司服务器发送请求(因为浏览器请求了callbackURL)
+		
+		到流程3为止,公司服务器已经能接收到用户的临时登录凭证,后续可以通过该凭证换取用户信息
+
+	4.公司服务器通过微信官方接口,将获取到的临时登录凭证code兑换为用户的token信息
+
+	5.公司服务器再次发送请求,请求微信官方接口,将用户的token信息兑换成用户的个人信息
+
+	6.公司服务器通过响应,将浏览器地址再次重定向回到我们的h5页面
+		在重定向的过程中,公司可以通过query字符串或者cookie等传参方式,将获取到的用户个人信息传递给h5页面
