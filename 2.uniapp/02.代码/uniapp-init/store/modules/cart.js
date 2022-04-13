@@ -1,6 +1,7 @@
 const state = {
 	cartList: [{
-			"count":3,
+			"selected": true,
+			"count": 3,
 			"promId": 0,
 			"showPoints": false,
 			"itemTagList": [{
@@ -74,8 +75,8 @@ const state = {
 			"itemSizeTableFlag": false
 		},
 		{
-			
-			"count":8,
+			"selected": false,
+			"count": 8,
 			"promId": 0,
 			"showPoints": false,
 			"itemTagList": [{
@@ -153,41 +154,83 @@ const state = {
 
 const mutations = {
 	// 用于添加商品到购物车中
-	ADDSHOPITEMMUTATION(state,good){
+	ADDSHOPITEMMUTATION(state, good) {
 		// console.log('ADDSHOPITEMMUTATION')
 		/*
 			需求:当用户点击加入购物车时,
 				如果该商品在购物车列表中已经存在,那么就对已存在的商品数量+1
 				如果该商品在购物车列表中不存在,那么就将当前商品加入到购物车中
 		*/
-	   
-	   // 找到符合条件的元素就会返回对应元素,如果没找到就返回undefined
-	   const shopItem = state.cartList.find((shopItem)=>{
-		   return shopItem.id === good.id
-	   })
-	   
-	   if(shopItem){
-		   // console.log('+1',shopItem)
-		   shopItem.count+=1;
-	   }else{
-		   // console.log('=1',good)
-		   // 以下方法添加属性,不是响应式属性
-		   // 想要后续新增一个响应式属性,需要使用vm.$set或者Vue.set方法
-		   // good.count = 1;
-		   
-		   // 如何快速辨别一个属性是否是响应式属性
-		   // 打印该对象,查看对应属性值的书写方式,
-		   // 如果是(...)说明当前属性是响应式属性,如果是原值(例如=>count:2),说明是非响应式属性
-		   this._vm.$set(good,'count',1)
-		   state.cartList.push(good);
-	   }
+
+		// 找到符合条件的元素就会返回对应元素,如果没找到就返回undefined
+		const shopItem = state.cartList.find((shopItem) => {
+			return shopItem.id === good.id
+		})
+
+		if (shopItem) {
+			// console.log('+1',shopItem)
+			shopItem.count += 1;
+		} else {
+			// console.log('=1',good)
+			// 以下方法添加属性,不是响应式属性
+			// 想要后续新增一个响应式属性,需要使用vm.$set或者Vue.set方法
+			// good.count = 1;
+
+			// 如何快速辨别一个属性是否是响应式属性
+			// 打印该对象,查看对应属性值的书写方式,
+			// 如果是(...)说明当前属性是响应式属性,如果是原值(例如=>count:2),说明是非响应式属性
+			this._vm.$set(good, 'count', 1)
+			state.cartList.push(good);
+		}
+	},
+	CHANGECOUNTMUTATION(state, {
+		type,
+		index
+	}) {
+		// console.log('CHANGECOUNTMUTATION')
+		const shopItem = state.cartList[index];
+		if (type) {
+			// 能进入这里说明需要数量+1
+			shopItem.count += 1;
+		} else {
+			// 能进入这里说明需要数量-1
+			if (shopItem.count === 1) {
+				// 能进入这里就说明当前商品数量为1,再减少就要变为删除该商品
+				state.cartList.splice(index, 1);
+			} else {
+				shopItem.count -= 1;
+			}
+		}
+	},
+	CHANGESELECTEDMUTATION(state, index) {
+		const shopItem = state.cartList[index];
+		shopItem.selected = !shopItem.selected;
+	},
+	CHANGEALLSELECTEDMUTATION(state,selected){
+		state.cartList.forEach((shopItem)=>{
+			shopItem.selected = selected;
+		})
 	}
 }
 
 const actions = {}
 
 const getters = {
+	isSelectedAll(state) {
+		/*
+			如果所有的商品都是选中状态,那么当前全选按钮也为选中状态
+			如果有一个商品处于未选中状态,那么全选按钮就是未选中状态
+			如果购物车中没有商品,那么全选按钮就是未选中状态
+			返回值:布尔值
+		*/
+		if (!state.cartList.length) return false;
 
+		const result = state.cartList.every((shopItem) => {
+			return shopItem.selected
+		})
+
+		return result;
+	}
 }
 
 export default {

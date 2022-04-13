@@ -8839,6 +8839,9 @@ function _default(url) {var data = arguments.length > 1 && arguments[1] !== unde
       url: baseUrl + url,
       data: data,
       method: method,
+      header: {
+        token: uni.getStorageSync('token') },
+
       success: function success(res) {
         // console.log('res',res)
         // this.indexData = res.data;
@@ -10973,6 +10976,7 @@ if (hadRuntime) {
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var state = {
   cartList: [{
+    "selected": true,
     "count": 3,
     "promId": 0,
     "showPoints": false,
@@ -11047,7 +11051,7 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
     "itemSizeTableFlag": false },
 
   {
-
+    "selected": false,
     "count": 8,
     "promId": 0,
     "showPoints": false,
@@ -11154,13 +11158,55 @@ var mutations = {
       this._vm.$set(good, 'count', 1);
       state.cartList.push(good);
     }
+  },
+  CHANGECOUNTMUTATION: function CHANGECOUNTMUTATION(state, _ref)
+
+
+  {var type = _ref.type,index = _ref.index;
+    // console.log('CHANGECOUNTMUTATION')
+    var shopItem = state.cartList[index];
+    if (type) {
+      // 能进入这里说明需要数量+1
+      shopItem.count += 1;
+    } else {
+      // 能进入这里说明需要数量-1
+      if (shopItem.count === 1) {
+        // 能进入这里就说明当前商品数量为1,再减少就要变为删除该商品
+        state.cartList.splice(index, 1);
+      } else {
+        shopItem.count -= 1;
+      }
+    }
+  },
+  CHANGESELECTEDMUTATION: function CHANGESELECTEDMUTATION(state, index) {
+    var shopItem = state.cartList[index];
+    shopItem.selected = !shopItem.selected;
+  },
+  CHANGEALLSELECTEDMUTATION: function CHANGEALLSELECTEDMUTATION(state, selected) {
+    state.cartList.forEach(function (shopItem) {
+      shopItem.selected = selected;
+    });
   } };
 
 
 var actions = {};
 
-var getters = {};var _default =
+var getters = {
+  isSelectedAll: function isSelectedAll(state) {
+    /*
+                                                	如果所有的商品都是选中状态,那么当前全选按钮也为选中状态
+                                                	如果有一个商品处于未选中状态,那么全选按钮就是未选中状态
+                                                	如果购物车中没有商品,那么全选按钮就是未选中状态
+                                                	返回值:布尔值
+                                                */
+    if (!state.cartList.length) return false;
 
+    var result = state.cartList.every(function (shopItem) {
+      return shopItem.selected;
+    });
+
+    return result;
+  } };var _default =
 
 
 {
