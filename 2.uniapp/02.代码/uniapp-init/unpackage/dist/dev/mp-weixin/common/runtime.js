@@ -105,11 +105,11 @@
 /******/
 /******/
 /******/ 		// mini-css-extract-plugin CSS loading
-/******/ 		var cssChunks = {"components/Recommend/Recommend":1,"components/CategoryList/CategoryList":1};
+/******/ 		var cssChunks = {"components/CateList/CateList":1,"components/Recommend/Recommend":1,"components/shopList/shopList":1,"components/CategoryList/CategoryList":1};
 /******/ 		if(installedCssChunks[chunkId]) promises.push(installedCssChunks[chunkId]);
 /******/ 		else if(installedCssChunks[chunkId] !== 0 && cssChunks[chunkId]) {
 /******/ 			promises.push(installedCssChunks[chunkId] = new Promise(function(resolve, reject) {
-/******/ 				var href = "" + ({"components/CateList/CateList":"components/CateList/CateList","components/Recommend/Recommend":"components/Recommend/Recommend","components/CategoryList/CategoryList":"components/CategoryList/CategoryList"}[chunkId]||chunkId) + ".wxss";
+/******/ 				var href = "" + ({"components/CateList/CateList":"components/CateList/CateList","components/Recommend/Recommend":"components/Recommend/Recommend","components/shopList/shopList":"components/shopList/shopList","components/CategoryList/CategoryList":"components/CategoryList/CategoryList"}[chunkId]||chunkId) + ".wxss";
 /******/ 				var fullhref = __webpack_require__.p + href;
 /******/ 				var existingLinkTags = document.getElementsByTagName("link");
 /******/ 				for(var i = 0; i < existingLinkTags.length; i++) {
