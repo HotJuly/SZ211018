@@ -4,23 +4,14 @@
 			<image class="logo" src="/static/images/logo.png" mode=""></image>
 			<view class="search">
 				<view class="iconfont icon-sousuo"></view>
-				<input 
-				class="searchInput" 
-				type="text" 
-				placeholder="搜索商品" 
-				placeholder-class="placeholder"
-				value="" />
+				<input class="searchInput" type="text" placeholder="搜索商品" placeholder-class="placeholder" value="" />
 			</view>
 			<button class="username">七月</button>
 		</view>
-		
-		<scroll-view class="navScroll" scroll-x="true" enable-flex="true">
+
+		<scroll-view v-if="indexData.kingKongModule" class="navScroll" scroll-x="true" enable-flex="true">
 			<view class="navItem active">推荐</view>
-			<view 
-			class="navItem"
-			v-for="item in indexData.kingKongModule.kingKongList"
-			:key="item.L1Id"
-			>{{item.text}}</view>
+			<view class="navItem" v-for="item in indexData.kingKongModule.kingKongList" :key="item.L1Id">{{ item.text }}</view>
 		</scroll-view>
 	</view>
 	<!-- <div>
@@ -33,7 +24,7 @@
 export default {
 	data() {
 		return {
-			indexData:{}
+			indexData: {}
 		};
 	},
 	/*
@@ -50,7 +41,7 @@ export default {
 			3.往哪发
 				通过服务器中注册的路由信息,可以查看到
 	*/
-	created() {
+	async created() {
 		// console.log('created')
 		/*
 			知识点整理
@@ -69,13 +60,21 @@ export default {
 					Vue或者小程序都可以
 		
 		*/
-		uni.request({
-			url:"http://localhost:3000/getIndexData",
-			success:(res)=>{
-				// console.log('res',res)
-				this.indexData = res.data;
-			}
-		})
+		// uni.request({
+		// 	// 小程序请求数据,需要书写完整路径
+		// 	// url: 'http://localhost:3000/getIndexData',
+			
+		// 	// h5项目请求数据,需要使用代理规则解决
+		// 	url: '/api/getIndexData',
+		// 	success: res => {
+		// 		// console.log('res',res)
+		// 		this.indexData = res.data;
+		// 	}
+		// });
+		
+		const result = await this.$myAxios('/getIndexData');
+		// console.log('result',result)
+		this.indexData = result;
 	},
 	// onLoad() {
 	// 	console.log('onLoad')
@@ -121,8 +120,10 @@ export default {
 			font-size 24upx
 			margin 0 20upx
 	.navScroll
-		display flex
+		// display flex
+		white-space nowrap
 		.navItem
+			display inline-block
 			width 140upx
 			height 80upx
 			font-size 28upx

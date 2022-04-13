@@ -1,0 +1,10 @@
+uniapp项目解决跨域问题方案
+	1.使用HBuilderX内置的浏览器进行调试
+		该方案最不推荐使用
+	
+	2.使用vue.config.js文件配置代理规则
+		该方案的配置文档参考vue-cli官网
+
+	3.使用manifest.json文件配置h5专用的代理规则
+		该方案的配置文档草考webpack官网
+		manifest.json->h5->devServer->proxy

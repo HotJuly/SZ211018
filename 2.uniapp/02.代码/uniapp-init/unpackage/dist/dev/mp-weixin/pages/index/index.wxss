@@ -38,9 +38,10 @@
   margin: 0 20rpx;
 }
 .indexContainer .navScroll {
-  display: flex;
+  white-space: nowrap;
 }
 .indexContainer .navScroll .navItem {
+  display: inline-block;
   width: 140rpx;
   height: 80rpx;
   font-size: 28rpx;

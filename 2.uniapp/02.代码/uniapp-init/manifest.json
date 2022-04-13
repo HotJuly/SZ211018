@@ -71,5 +71,15 @@
     "uniStatistics" : {
         "enable" : false
     },
+	"h5":{
+		"devServer":{
+			"proxy": {
+			  "/api": {
+			    "target": "http://localhost:3000",
+			    "pathRewrite": {"^/api" : ""}
+			  }
+			}
+		}
+	},
     "vueVersion" : "2"
 }
