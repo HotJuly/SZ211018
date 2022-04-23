@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        /* 
+            使用构造函数设计并测试以下需要
+            需求1: 
+                现在1个人, 都有姓名与年龄(值自己指定), 都能自我介绍自己的姓名和年龄, 能得到当前的总人数
+            需求2: 
+                现在有了一个学生, 它有身价的属性, 能介绍它的所有信息
+        */
+        function Person(name,age){
+            this.name = name ;
+            this.age = age;
+
+            Person.count+=1;
+        }
+
+        Person.count = 0;
+
+        Person.prototype.say = function(){
+            console.log(`我叫${this.name},我今年${this.age}`)
+        }
+
+        var p1 = new Person("xiaoming",18);
+        p1.say();
+        console.log(Person.count)
+
+
+        /*
+            组合继承分为两步骤:
+                1.获取到父类所有的属性
+                    使用call方法借调父类构造函数,从而让父类替子类打工
+                2.获取到父类所有的方法
+                    能够使用父类身上所有的方法,说明,父类的原型对象,出现在子类的原型链上了
+
+            重写
+                如果父类的某个方法不满足子类现在的需求,子类就可以在原型对象上创建一个同名的方法
+        */
+        function Student(name,age,price){
+            Person.call(this,name,age)
+            // this.name = name ;
+            // this.age = age;
+            this.price = price;
+        }
+
+        // Student.prototype = Person.prototype;
+        Student.prototype = new Person();
+
+        var s1 = new Student("xiaowang",28,100000);
+        // s1.say -> s1.__proto__.say(new Person().say)
+        // new Person().say -> new Person().__proto__.say -> Person.prototype.say
+
+        Student.prototype.say = function(){
+            console.log(`我叫${this.name},我今年${this.age},我有${this.price}`)
+        }
+        s1.say();
+        console.log(s1)
+    </script>
+</body>
+
+</html>
