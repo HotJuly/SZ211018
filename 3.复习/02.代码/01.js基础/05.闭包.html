@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        /*
+            1.闭包的产生条件
+                1.函数嵌套函数
+                2.内部函数使用到外部函数的变量
+        
+                问题:请问如果不返回内部的函数,是否会产生闭包?
+                    也会产生闭包
+                        注意:返不返回内部函数不是闭包产生的必然条件
+                
+                闭包分为两种:
+                    1.有效闭包
+                        如果将内部函数返回出去,此时闭包就会长久保留
+
+                    2.无效闭包
+                        虽然闭包存活的时间非常短而且没有任何作用,但是它存在过
+
+            2.闭包的优点
+                延长局部变量的生命周期(将本来该销毁的变量保存起来,留作以后使用)
+                js模块化
+
+            3.闭包的缺点
+                内存泄漏,内存溢出
+
+                可能会由于缓存了无用数据导致,内存泄漏
+                内存泄漏过多可能会导致内存溢出,可能会导致程序宕机
+
+            4.如何解决闭包的副作用
+                1.尽量少用
+                2.当闭包使用结束之后,及时释放闭包
+                    闭包之所以能够存活,就是因为垃圾回收机制觉得他还有用,所以不能死
+                    将使用闭包的函数的所有引用,全部释放才能导致该函数被垃圾回收机制回收,从而导致
+                        闭包无人使用,最终也被回收
+
+            5.闭包是什么?
+                闭包应该是一个对象,它内部会存储某些变量名以及变量值
+                闭包其实就是本应该销毁的变量对象,但是他意外存活了
+
+            6.闭包的使用场景?
+                函数防抖
+                函数节流
+
+
+            执行上下文:
+                执行上下文内部分为两块区域:
+                    1.执行当前函数所需要的内存空间
+                    2.收集当前作用域中所有变量的变量对象
+
+                执行上下文创建时机:
+                    每次调用函数都会创建一个全新的执行上下文
+
+                执行上下文销毁时机:
+                    当前函数执行结束的时候
+
+
+            垃圾回收机制
+                当一个对象被某个标识或者属性所引用,那么该对象就不会被销毁
+                也就是说,一个对象只要没有人使用,就会被垃圾回收机制销毁
+
+        */
+
+        // function wrap(){
+        //     var a = 1;
+        //     function inner(){
+        //         console.log(a)
+        //     }
+        //     // console.log(inner)
+        //     return inner;
+        // }
+
+        // var fn = wrap();
+        // var fn2 = fn;
+        // fn();
+        // fn=null;
+
+        // function fn(){
+        //     var a = 2;
+        //     a++;
+        //     console.log(a);
+        // }
+
+        // fn();
+        // fn();
+
+        // var a = 123;
+
+        // a++;
+        // a--;
+
+        // (function(){
+        //     var a=123;
+
+        //     function getA(){
+        //         return a;
+        //     }
+
+        //     function addA(){
+        //         a++;
+        //     }
+
+        //     window.fns={
+        //         getA,
+        //         addA
+        //     }
+        // })();
+        // window.fns.addA()
+        // console.log(window.fns.getA());
+
+
+        function wrap(){
+            var a=1;
+            function fn1(){
+                a++;
+                console.log('fn1',a)
+            }
+            function fn2(){
+                a+=2;
+                console.log('fn2',a)
+            }
+            return {
+                fn1,
+                fn2
+            }
+        }
+
+        var {fn1,fn2} = wrap();
+
+        fn1();  //  2   2
+        fn1();  //  3   3
+        fn1();  //  4   4
+        fn1();  //  5   5
+
+        fn2();  //  3   7
+        fn2();  //  5   9
+        fn2();  //  7   11
+        fn2();  //  9   13
+
+        fn2=null;
+        fn1();
+    </script>
+</body>
+</html>
