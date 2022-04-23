@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        /*
+            js中变量的作用域与声明位置有关,与调用位置无关
+
+            在编程界中,一共存在两种作用域:
+                1.动态作用域
+                    作用域只与调用位置有关,与声明位置无关
+
+                2.词法作用域(又称为静态作用域)
+                    作用域只与声明位置有关,与调用位置无关
+                注意:js中只有静态作用域,不存在动态作用域
+
+            作用域相关
+                其实就是变量的作用范围(限制变量的可使用范围)
+                1.预解析(又称为声明提升)
+                    js引擎在执行代码之前,会预先浏览一遍代码,将部分代码进行位置替换
+
+                    函数提升
+                        函数提升是整体提升
+                        js引擎会将函数名声明以及函数体赋值一起提升到最前端
+
+                    变量提升
+                        变量提升是局部提升
+                        js引擎会将变量声明提升到最前端,但是赋值部分会留存于原位置
+                        
+
+                    注意:
+                        1.变量和函数名其实是同一个东西,统称为标识
+                        2.声明变量以及变量赋值是两个操作
+                        3.函数表达式的提升属于变量提升
+                        4.匿名函数不存在提升
+
+                2.预解析的位置
+                    预解析只会将代码提升到当前作用域的最顶端,不会出现穿透作用域的情况
+
+                3.预解析的优先级
+                    函数提升优先于变量提升
+
+                4.作用域分类
+                    3种
+                    1.全局作用域
+                    2.局部作用域(函数作用域)
+                    3.块级作用域(ES6新增)
+                        使用let或者const都有可能产生块级作用域
+                        在某个{}之内使用let或者const声明变量,就会产生块级作用域
+                        块级作用域例如在if或者for循环等地方使用就会导致外层作用域无法访问内部的变量
+
+        */
+        // var a = 1;
+        // function fn(){
+        //     var a = 2;
+
+        //     function b(){
+        //         console.log(a);
+        //     }
+
+        //     return b;
+        // }
+
+        // var c = fn();
+        // c();
+
+        // a();
+        // function a(){
+        //     console.log('a')
+        // }
+
+        // console.log(a);
+        // var a = 2;
+
+
+        // var a;
+        // console.log(a);
+        // a = 2;
+
+        // function a(){
+        //     console.log(1)
+        // }
+        // var a;
+        // a=3
+        // console.log(a)
+
+        // var a=1;
+        // function fn(){
+        //     var a = 2;
+        //     var c = 3;
+        //     console.log(a,c)
+        // }
+        // fn();
+        // console.log(a,c)
+
+        // 函数表达式
+        // var a = function(){
+        //     console.log('1')
+        // }
+        // function a(){
+        //     console.log('2')
+        // }
+        // a();
+
+        // for (var index = 0; index < 10; index++) {
+        //     let obj = {
+        //         a:3
+        //     }
+        // }
+        // console.log(obj)
+
+
+        // js的漏洞:具名函数赋值
+        // 具名函数赋值情况下
+        // 该函数名在外层作用域无法查看,只能在该函数内部可见
+        // 该标识内部的数据不能修改,修改无效
+        // let obj = {
+        //     a: 2,
+        //     fn2: function a() {
+        //         a=8;
+        //         console.log(a)
+        //     }
+        // }
+
+        // // obj.fn2();
+        // console.log(a)
+
+        (function a() {
+            console.log(1, a)
+            a=3;
+            console.log(3, a)
+        })();
+        console.log(2, a)
+    </script>
+</body>
+
+</html>
