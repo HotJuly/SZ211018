@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        /*
+            js中原型相关重点:
+                1.万物皆对象(除了基础数据类型以外)
+                2.所有的对象都是Object的实例对象
+                3.所有的函数都是Function的实例对象
+                    js中能够创建函数的只有Function
+                    Function是自己创建的自己(???)
+                4.函数是一等公民,它既是函数又是对象
+        
+            语法糖:
+                {}->new Object
+                function->new Function
+
+            js中,使用C语言创建的内容:
+                1.Object函数
+                2.Function函数
+        */
+        function Foo() {}
+        const f1 = new Foo();
+        // const f2 = new Foo()
+
+        // const o1 = new Object()
+        const o1 = {}
+
+        console.log(Object)
+        console.log(Function)
+        console.log(Function.prototype)
+
+        // Foo instanceof Object            true
+        // Foo instanceof Function          true
+        // Object instanceof Object         true
+        // Function instanceof Function     true
+        // Function instanceof Object       true
+
+        // Object instanceof Foo            false
+        // f1 instanceof Function           false
+        // f1 instanceof Object             true
+
+        /*
+            在终极原型链图中,有问题的4条线(都是作者为了实现原型链特地添加上去的)
+            1.Function.prototype === Function.__proto__
+                为了证明Function自己也是一个函数
+                    证明的目的,就是为了让Function函数能够使用到所有函数都能使用的方法
+
+            2.Function.prototype === Object.__proto__
+                同1
+
+            3.Function.prototype.__proto__ === Object.prototype
+                为了实现函数也是对象,也就是说所有的原型链顶点都是Object这边
+
+            3.Object.prototype.__proto__ === null
+                为了防止原型链进入死循环,特地添加的该线
+
+
+            问题:什么是伪数组?
+                1.存储数据以下标形式存储
+                2.具有length
+                3.不能使用数组的方法(也就是说数组的原型对象不在伪数组的原型链上)
+
+        */
+    </script>
+</body>
+
+</html>

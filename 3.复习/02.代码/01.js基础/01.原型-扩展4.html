@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        /*
+            面试题:假设现在有一个变量data,内部存储数据,如何判断该数据的数据类型?
+        */
+        var data = [];
+
+        // 如果B的原型对象出现在A的原型链上,就返回true,否则false
+        // console.log(data instanceof Array)
+
+        // typeof返回值:string,number,boolean,undefined,function,object
+        // 缺点:
+            // 1.无法正常实现null
+            // 2.无法具体区分对象数据类型
+        // console.log(typeof data)
+
+        // console.log(Object.prototype.toString.call(data).split(" ")[1].replace("]",""))
+
+        var arr = [1,2,3,[4,5,[6,7,[8],9]]]
+        console.log(arr.toString().split(','))
+    </script>
+</body>
+</html>
