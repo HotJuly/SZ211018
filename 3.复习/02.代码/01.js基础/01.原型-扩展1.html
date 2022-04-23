@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        /*
+            原型面试题注意点:
+                1.观察是给原型对象添加属性还是替换原型对象
+                2.观察是先改变原型对象还是先创建实例对象
+        
+        */
+        function Person(name){
+            this.name=name
+        }
+
+        Person.prototype={
+            c:1
+        }
+
+        var p1  = new Person("xiaoming");
+
+        console.log(p1.c)
+    </script>
+</body>
+</html>

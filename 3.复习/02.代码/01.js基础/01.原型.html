@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        /*
+            一个函数只靠声明是无法观察出是否是构造函数的
+            只有使用new调用的函数,才是构造函数
+                也就是说,只有在调用函数的时候才能分辨是不是构造函数
+        */
+       /*
+            Javascript中内存分为两部分
+                栈内存  只能存放基本数据类型,地址,标识
+                堆内存  可以存放对象数据类型和基本数据类型
+       
+            变量名和函数名统称为标识,其实同一个东西
+       */
+      /*
+        原型相关
+            1.每个构造函数都有显式原型属性
+            2.每个实例对象都有隐式原型属性
+            3.实例对象的隐式原型指向构造函数的显式原型
+
+            对象读取属性的时候,如果自身没有的属性,就会顺着__proto__向上查找
+
+        问题:是不是所有的函数都有显式原型属性(箭头函数除外)
+            都有,因为函数没有调用之前是无法区分身份的,但是原型对象是在每个函数声明的时候就创建的
+      */
+        function Person(name){
+            this.name=name
+            // this.eat=function(){
+            //     console.log('正在吃饭')
+            // }
+            // return this;
+        }
+
+        Person.prototype.eat=function(){
+            console.log('正在吃饭')
+        }
+
+        // var person = Person("xiaoming");
+        var p1 =new Person("xiaoming");
+        var p2 =new Person("xiaoming");
+        console.log(p1.eat===p2.eat)
+
+        /*
+            new做了哪些事情?
+                1.调用对应函数,并且把实参传入形参进行接收
+                2.声明形参
+                3.将当前构造函数的显式原型属性的值赋值给实例对象作为隐式原型属性
+                    (瞬间赋值,后续构造函数修改显式原型属性,不会影响到已经创建的实例对象的隐式原型属性)
+                4.默认自动返回this
+        */
+
+        function Dog(){
+            var that = {};
+            that.__proto__ = Dog.prototype
+            return that;
+        }
+
+        var dog = new Dog();
+        console.log(p1,dog)
+    </script>
+</body>
+</html>
