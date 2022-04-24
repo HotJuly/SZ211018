@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        /*
+            this其实就是js的关键字,禁止声明
+            this类似于函数形参的存在,函数会自动创建this,并向内部注入数据
+                形参的值由开发者通过调用函数时候,传入实参控制
+                this的值由浏览器控制,浏览器会将本次函数的调用者传入到this中
+
+            this的值与函数的调用方式有关,与声明位置无关(与作用域规则相反)
+
+            this常见的四种指向:
+                1.普通调用  ->  fn();
+                    该类调用方式,this指向为window
+
+                2.隐式调用  ->  obj.fn();
+                    该类调用方式,this指向为方法前面的对象;
+                    无论找到方法的时候经过了多少次的属性读取,只看最后方法从哪个对象身上得到的
+
+                3.构造调用 ->   new fn();
+                    该类调用方式,this指向为当前创建的实例对象
+
+                4.显式调用  ->  fn.call或者apply或者bind方法
+                    该类调用方式,this指向为借调函数接收到的第一个实参
+
+            this的特殊情况:
+                1.事件回调函数
+                    this是事件源
+                2.定时器
+                    this是window
+                3.Vue的methods,生命周期,computed,watch
+                    this都是当前组件的实例对象
+                4.React
+                    生命周期->this是组件实例对象
+                    创建方法->如果使用ES6方法简写语法,那么该函数的this就是undefined,
+                            如果使用赋值语法创建方法,那么该函数的this就是当前组件的实例对象
+                5.箭头函数
+                    使用外层作用域的this指向
+
+            问题1:请问箭头函数能不能被构造调用?
+            答案:不行,会报错
+                因为他是用的是外层的this,它具有创建实例对象的效果
+                报错信息:fn is not a constructor
+
+            问题2:请问能否使用call,apply,bind修改箭头函数的this指向?
+            答案:不能,因为他并没属于自己的this,所以无法修改
+
+            问题3:请问箭头函数是否具有原型对象?
+            答案:没有,因为它具备创建实例对象的能力
+                
+        
+        */
+
+        // function fn(){
+        //     console.log(this)
+        // }
+
+        // // window.fn();
+
+        var obj = {
+            obj2:{
+                fn2:fn
+            }
+        }
+
+        // obj.obj2.fn2();
+
+        // fn.call(obj)
+
+        var fn = ()=>{
+            console.log(this)
+        }
+
+        // new fn();
+        fn.call(obj)
+
+    </script>
+</body>
+</html>
