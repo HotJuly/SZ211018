@@ -53,7 +53,7 @@
             答案:不能,因为他并没属于自己的this,所以无法修改
 
             问题3:请问箭头函数是否具有原型对象?
-            答案:没有,因为它具备创建实例对象的能力
+            答案:没有,因为它不具备创建实例对象的能力
                 
         
         */
@@ -64,22 +64,44 @@
 
         // // window.fn();
 
-        var obj = {
-            obj2:{
-                fn2:fn
-            }
-        }
+        // var obj = {
+        //     obj2:{
+        //         fn2:fn
+        //     }
+        // }
 
         // obj.obj2.fn2();
 
         // fn.call(obj)
 
-        var fn = ()=>{
-            console.log(this)
-        }
+        // var fn = ()=>{
+        //     console.log(this)
+        // }
 
         // new fn();
-        fn.call(obj)
+        // fn.call(obj)
+
+        var obj = {
+            length:6,
+            fn:function(){
+                return this.length
+            }
+        }
+
+        var length = 7;
+
+        (function(){
+            // arguments会存储当前函数接收到的所有实参组成的伪数组
+
+            // 数组是特殊的对象,特殊在key值是0,1,2,3,4这种下标形式
+            // console.log(arguments)
+
+            var length = 8;
+
+            // console.log(arguments.0());
+            console.log(arguments[0]());
+
+        })(obj.fn);
 
     </script>
 </body>

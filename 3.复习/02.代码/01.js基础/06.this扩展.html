@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        function fn(val1,val2,val3){
+            console.log(this)
+            return val1 + val2 + val3;
+        }
+
+        /*
+            面试题:call和apply的区别?
+                相同点:
+                    1.都可以修改某个函数的this指向
+                        通过给借调函数传入第一个实参,可以指定当前执行的this指向
+                    2.被借调函数会被同步调用
+                    3.call和apply都会将被借调函数执行的结果,作为自己的返回值进行返回
+                    4.如果没有传入第一个实参,那么被借调函数的this就会是window对象
+
+                不同点:
+                    1.传入参数个数不同
+                        call方法->0到无限大
+                            第一个实参用于改变this指向
+                            第二个实参开始会传给fn函数,作为fn的实参
+
+                        apply方法->0到2
+                            第一个实参用于改变this指向
+                            第二个实参是数组或者伪数组类型,该数组会被解构传入fn函数
+
+        
+        */
+
+        var obj = {
+            name:"xiaoming"
+        }
+
+        // console.log(fn.call(obj,1,2,3))
+        // console.log(fn.apply(obj,[1,2,3]))
+
+        // fn.call(obj,1,2,3)
+        // console.log(1)
+        // fn.apply(obj,[1,2,3])
+        // console.log(2)
+
+        // fn.call()
+        // fn.apply()
+
+        // Function.prototype.myCall=function(thatThis,...args){
+        //     // this,thatThis
+        //     // this->调用该方法的实例对象,也就是被借调函数fn
+        //     // thatThis->是开发者指定的this指向,也就是说后面需要将被借调函数的this改为这个
+        //     if(!thatThis){
+        //         thatThis = window;
+        //     }
+
+        //     // console.log(args)
+
+        //     thatThis._fn = this;
+
+        //     var result = thatThis._fn(...args);
+
+        //     delete thatThis._fn;
+
+        //     return result;
+        // }
+
+        Function.prototype.myCall=function(thatThis){
+            // this,thatThis
+            // this->调用该方法的实例对象,也就是被借调函数fn
+            // thatThis->是开发者指定的this指向,也就是说后面需要将被借调函数的this改为这个
+            if(!thatThis){
+                thatThis = window;
+            }
+
+            // console.log([].slice.call(arguments,1));
+            var args = [];
+            for (var index = 1; index < arguments.length; index++) {
+                args.push(arguments[index])
+            }
+
+            // console.log(args.toString())
+
+            thatThis._fn = this;
+
+            // var result = thatThis._fn(args.toString());
+            // eval('thatThis._fn(1,2,3)');
+            var result = eval('thatThis._fn('+ args.toString() +')');
+
+            delete thatThis._fn;
+
+            return result;
+        }
+
+        // console.log(fn.myCall(obj,1,2,5));
+
+        /*
+            面试题:call和bind的区别
+            相同点:
+                1.都可以改变this指向
+                    第一个实参就是用来指定函数的this指向
+
+                2.传入的参数个数相同 ->个数都是0到无限大
+                    第一个参数指定this指向
+                    第二个参数开始都会作为实参传给被借调函数
+
+                3.如果第一个实参传入的是null或者undefined,this指向就会变为window
+
+            不同点:
+                1.返回值
+                    call方法的返回值,是被借调函数的执行结果
+                    bind方法的返回值一定是一个全新函数
+
+                2.被借调函数的执行时机不同
+                    call方法会同步调用被借调函数
+                    bind方法由于返回的是一个函数,所以只有等开发者调用返回的函数才能得到结果
+
+                3.修改this指向的时间
+                    call方法只会临时修改函数本轮执行的this指向,对后续不会有任何影响
+                    bind方法会返回一个被永久修改了this指向的全新函数
+
+                4.传参的次数
+                    call方法只有一次传入实参的机会
+                    bind方法由于返回的是一个新函数,所以除了在调用bind的时候可以传入参数,还可以在新函数被调用的时候传入实参
+                        两次传入的实参最终都会合并起来
+
+        */
+
+        // fn.call(obj,1,2,3);
+        // fn();
+        // console.log(fn.bind(null,1,2,3));
+        var fn1 = fn.bind(obj,1,2);
+        // console.log(fn1 === fn)
+        // console.log(fn1(3));
+        // fn1();
+        // fn();
+
+        Function.prototype.myBind =function(thatThis,...args){
+            // this->被借调函数
+            // thatThis->后续强行指定的this指向
+            var that = this;
+
+            return function(...args2){
+                return that.call(thatThis,...args,...args2);
+            }
+        }
+        
+        var fn1 = fn.myBind(null,1,2);
+        console.log(fn1(3));
+    </script>
+</body>
+</html>
