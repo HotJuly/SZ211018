@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    /*
+      Promise是一个构造函数
+        接收参数:
+          1个执行器函数
+          数据类型为函数
+
+          执行器函数内部的代码会被同步执行
+          执行器函数
+            接受两个实参,也都是函数
+              resolve
+                调用该方法可以将当前返回的promise对象状态变为成功状态
+              reject
+                调用该方法可以将当前返回的promise对象状态变为失败状态
+
+              如果给以上两个方法传入数据,那么该数据会变成promise对象的result值
+
+        返回值:promise的实例对象
+          promise对象具有三种状态
+            pending
+            resolved
+            rejected
+            默认状态为pending
+
+            promise状态只能变化一次,并且不可逆
+
+      .then
+        用于监视前面的promise对象状态的变化
+          其实并不是监视promise状态的变化,而是只要不是pending状态,就会执行对应的回调函数
+        数据类型:函数
+        接收参数:
+          接收两个,数据类型:函数
+          第一个实参是成功的回调函数
+          第二个实参是失败的回调函数
+
+          注意点:
+            1.无论前面被监视的promise状态变为成功还是失败,都可以接收到该promise的result值
+            .then会将被监视的promise对象的result值作为实参传递给对应的回调函数
+
+            2..then回调函数中的return不会影响到.then返回的结果,一定返回一个promise对象
+
+            3.如果需要执行对应的回调函数时,发现并没有对应的函数可以执行,p2的状态会继承p1的状态向下传递
+
+        返回值:全新的promise对象(后面简称p2)
+          如何控制p2的状态变化
+            变为成功
+              1.只要回调函数中的代码全部执行结束,那么返回的p2就会变成成功状态
+                其实就是回调函数返回基本数据类型的数据,那么状态就会变为成功状态
+
+              2.如果回调函数中返回一个成功状态的promise对象,那么返回的p2也会变为成功状态
+
+            变为失败
+              3.只要回调函数中的代码执行失败(报错),那么返回的p2就会变为失败状态
+
+              4.如果回调函数中返回一个失败状态的promise对象,那么返回的p2也会变为失败状态
+
+      .catch
+        用于监视前面promise状态是否为失败状态
+        接收参数:
+          1个,类型也是函数
+
+        .catch其实就是.then的语法糖,它相当于.then第一个实参传空
+
+    */
+
+    // 现象1:证明promise状态不可逆
+    // var promise = new Promise(function (resolve, reject) {
+    //   console.log(2)
+
+    //   setTimeout(() => {
+    //     resolve(123);
+    //   }, 1000)
+
+    //   setTimeout(() => {
+    //     reject(123);
+    //   }, 2000)
+
+    //   setTimeout(() => {
+    //     console.log(promise)
+    //   }, 3000)
+
+    //   // reject();
+    // })
+
+    // 场景2:证明.then只是观察前面的promise是否为pending状态
+    // var promise = new Promise(function (resolve, reject) {
+    //   setTimeout(() => {
+    //     resolve(123);
+    //     // reject(123);
+    //   }, 1000)
+    // })
+
+    // // Promise.resolve().then()
+    // setTimeout(()=>{
+    //   promise.then((data)=>{
+    //     console.log('success',data)
+    //   },(data)=>{
+    //     console.log('fail',data)
+    //   })
+    // },2000)
+
+    // 场景三:证明回调函数的返回值不会影响到.then的返回结果
+    // var p1 = new Promise(function (resolve, reject) {
+    //     resolve(123);
+    // })
+
+    // var p3 = Promise.resolve();
+
+    // var p2 = p1.then((data)=>{
+    //   console.log('success',data)
+    //   // throw new Error('xixi')
+    //   return p3;
+    // },(data)=>{
+    //   console.log('fail',data)
+    // })
+
+    // console.log(p2===p3)
+
+    // var p1 = new Promise(function (resolve, reject) {
+    //     reject(123);
+    // })
+
+    // p1
+    // .then(()=>{
+    //   console.log('1')
+    // },(data)=>{
+    //   console.log('2')
+    // })
+    // .then(()=>{
+    //   console.log('3')
+    // },(data)=>{
+    //   console.log('4')
+    // })
+
+    
+    var p1 = new Promise(function (resolve, reject) {
+        reject(123);
+    })
+
+    p1
+    .then(()=>{
+      console.log('1')
+    })
+    .catch(()=>{
+      console.log('2')
+    })
+    .then(()=>{
+      console.log('3')
+    })
+  </script>
+</body>
+
+</html>
