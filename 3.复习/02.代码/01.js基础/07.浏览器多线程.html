@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <ul>
+      <li>aaa</li>
+      <li>bbb</li>
+      <li>ccc</li>
+  </ul>
+  <button id="test">test</button>
+  <div id="content">
+      aaaaaaa
+  </div>
+  <script>
+      /*
+      
+        首次渲染流程:执行完所有的主线程代码->清空微任务队列->渲染页面(GUI线程)->执行下一个宏任务(在流程2和3中循环)
+        更新渲染流程:清空微任务队列->渲染页面(GUI线程)->执行下一个宏任务(在流程2和3中循环)
+
+        GUI线程与JS线程处于互斥状态,要么执行js,要么渲染页面
+
+        浏览器渲染页面也是异步执行,为了防止多次修改页面结构
+      */
+      Promise.resolve().then(() => { // 微任务
+          alert('promise1') // 页面渲染了吗?
+      }) 
+      Promise.resolve().then(() => { // 微任务
+          alert('promise2') // 页面渲染了吗?
+      }) 
+      setTimeout(() => {// 宏任务
+          alert(document.getElementById('content').innerHTML)  // 页面渲染了吗?
+      }, 0)
+      document.getElementById('test').onclick = () => {// 宏任务
+          document.getElementById('content').innerHTML = 'xxxx'
+          document.getElementById('content').innerHTML = 'xxxx2'
+          document.getElementById('content').innerHTML = 'xxxx3'
+          document.getElementById('content').innerHTML = 'xxxx4'
+          document.getElementById('content').innerHTML = 'xxxx'
+
+          alert(document.getElementById('content').innerHTML)
+
+          setTimeout(() => {// 宏任务  
+              alert(document.getElementById('content').innerHTML) // 页面更新渲染了吗?
+          }, 0); 
+
+          Promise.resolve().then(() => { // 微任务 
+              alert('promise3') //页面更新渲染了吗?
+          }) 
+      }
+      alert('1111') // 页面渲染了吗?
+
+  </script>
+</body>
+</html>
