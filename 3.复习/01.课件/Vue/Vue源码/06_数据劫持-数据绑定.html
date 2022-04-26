@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>06_数据劫持-数据绑定</title>
+</head>
+  <body>
+    <div id="app">
+      <p v-on:click="handleClick">{{msg}}</p>
+    </div>
+    <script src="./js/observer.js"></script>
+    <script src="./js/watcher.js"></script>
+    <script src="./js/compile.js"></script>
+    <script src="./js/mvvm.js"></script>
+    <script>
+      var vm = new MVVM({
+        el: "#app",
+        data: {
+          msg: "hello mvvm",
+          person:{
+            name:"xiaoming",
+            msg:"123"
+          },
+        },
+        methods:{
+          handleClick(){
+            // console.log('handleClick')
+            vm.msg = "atguigu666"
+          }
+        }
+      });
+
+    </script>
+  </body>
+</html>
