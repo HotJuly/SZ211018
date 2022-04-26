@@ -14,6 +14,7 @@ function flushCallbacks () {
 if (typeof Promise !== 'undefined') {
   const p = Promise.resolve()
   timerFunc = () => {
+    // 由于此处具有开关设置,所以多个nextTick只会开启一个.then微任务
     p.then(flushCallbacks)
   }
 }
@@ -27,20 +28,23 @@ export function nextTick (cb,vm) {
   })
   if (!pending) {
     pending = true
+    // 由于此处具有开关设置,所以多个nextTick只会执行一次timerFunc
     timerFunc()
   }
 }
 
 /*
-  nextTick源码重点
-    连续调用多个nextTick只会开启一个微任务
-    nextTick在源码中实现了一个独立的任务队列,首先nextTick会将所有的回调函数都收集在callbacks数组中
-    等到微任务执行的时候,会遍历该数组,执行所有收集到的回调函数
+  nextTick源码重点:
+    1.连续调用多个nextTick只会创建一个微任务
+    2.nextTick使用callbacks数组收集所有的nextTick的回调函数,实现了一个队列
+    3.在微任务执行的时候,会将callbacks数组中所有的回调函数依次遍历执行
 
-    Vue视图更新流程
-      1.当开发者修改某一个响应式属性时,会触发数据劫持,从而执行dep.notify方法进行更新通知
-      2.dep.notify中会执行watcher的update方法来准备更新视图
-      3.update方法中会执行queueWatcher方法
-      4.在queueWatcher方法中会执行nextTick方法,并且将更新视图的函数传入nextTick
-        总结:最终导致Vue的更新是一个异步的效果
+  Vue响应式流程:
+    1.当开发者修改某个响应式属性的时候,会触发该属性的set方法
+    2.在set方法中,会执行dep.notify方法,通知watcher开始进行视图更新
+    3.watcher会调用update方法,准备开始更新
+    4.update方法会调用queueWatcher方法
+    5.queueWatcher方法中会调用nextTick方法,并且将更新视图的函数交给nextTick作为回调函数
+    6.最终,当开始清空微任务队列的时候,视图一定会在第一顺列进行更新
+
 */
