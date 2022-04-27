@@ -3,10 +3,22 @@
   <head>
     <meta charset="UTF-8" />
     <title>06_数据劫持-数据绑定</title>
+    <!--
+    1. 数据绑定
+      * 初始化显示: 页面(表达式/指令)能从data读取数据显示 (编译/解析)
+      * 更新显示: 更新data中的属性数据==>页面更新
+  -->
+  <!-- 
+    观看源码需要总结的东西:
+      1.data中的数据到底是如何显示在页面上的
+      2.如何做到响应式的效果
+   -->
 </head>
   <body>
-    <div id="app">
+    <div id="app" class="A">
       <p v-on:click="handleClick">{{msg}}</p>
+      <p>{{msg}}</p>
+      <p>{{msg}}</p>
     </div>
     <script src="./js/observer.js"></script>
     <script src="./js/watcher.js"></script>
@@ -21,14 +33,10 @@
             name:"xiaoming",
             msg:"123"
           },
-        },
-        methods:{
-          handleClick(){
-            // console.log('handleClick')
-            vm.msg = "atguigu666"
-          }
         }
       });
+
+      vm.msg="hello world"
 
     </script>
   </body>
