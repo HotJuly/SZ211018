@@ -8,25 +8,37 @@
 </head>
 <body>
     <script>
-        console.log("1",true==1);  
-        console.log("2",true=="1");
-        console.log("3","2"==1);   
-        console.log("4","a"==1);   
-        console.log("5",true=="true");
-        console.log("6",true=="false")
+        // 在js中,一共具有6个false值,分别是0,NaN,"",false,null,undefined
 
-        console.log("7",[]==[]);
-        console.log("8",{}=={});   
-        console.log("9",[]===[]);  
-        console.log("10",{}==={}); 
-        console.log("11",[]!==[]);
-        console.log("12",[]==![]); 
-        console.log("13",{}!=={});
-        console.log("14",{}==!{}); 
+        // 在隐式类型转换中,null和undefined他们两者相等,与其他任何人都不相等
 
-        console.log(0=="0") 
-        console.log(0==[])  
-        console.log("0"==[])
+        // 基本数据类型VS基本数据类型
+        // 转换类型,转为数字,toNumber
+        // console.log("1",true==1);  //true   1===1
+        // console.log("2",true=="1");//true   1===1
+        // console.log("3","2"==1);   //false  2===1
+        // console.log("4","a"==1);   //false  NaN===1
+        // console.log("5",true=="true");//false   1===NaN
+        // console.log("6",true=="false");//false  1===NaN
+
+        // 对象数据类型 VS 对象数据类型
+        // 直接比较地址值
+        // 语法糖:[]=>new Array() {}=>new Obejct()
+        // console.log("7",[]==[]);    //false new Array()===new Array()
+        // console.log("8",{}=={});    //false new Obejct() === new Obejct()
+        // console.log("9",[]===[]);   //false
+        // console.log("10",{}==={});  //false
+        // console.log("11",[]!==[]);  //true
+        // console.log("13",{}!=={});  //true
+
+        // // 对象数据类型 VS 基础数据类型
+        // // valueOf() -> toString()
+        // console.log("12",[]==![]);  //true []==false   ->  ""==false   ->  0===0
+        // console.log("14",{}==!{});  //false {}==false   ->  "[object Object]"==false    ->  NaN===0
+
+        console.log(0=="0") //true
+        console.log(0==[])  //true
+        console.log("0"==[])//false ->  "0"=="" 
 
 
 
