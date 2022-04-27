@@ -1,25 +1,18 @@
 <template>
-  <div id="app" v-loading="loading">
-    <HelloWorld msg="Welcome to Your Vue.js App" :fn="changeMsg"/>
+  <div id="app">
+    <HelloWorld msg="Welcome to Your Vue.js App"/>
   </div>
 </template>
 
 <script>
 import HelloWorld from './components/HelloWorld.vue'
-import mixins from './mixins';
 
 export default {
   name: 'App',
   components: {
     HelloWorld
   },
-  mixins:[mixins],
-  a:9,
-  methods:{
-    changeMsg(val){
-      console.log(this,val)
-    }
-  }
+  a:9
 }
 </script>
 

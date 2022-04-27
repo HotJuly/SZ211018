@@ -2,81 +2,67 @@
   <div class="hello">
     <h1>{{ msg }}</h1>
     <!-- <el-button>123</el-button> -->
-    <!-- <h2>{{ num }}</h2> -->
-    <button @click="changeMsg" v-if="isShow">添加</button>
-    <input ref="input888" v-else type="text">
+    <!-- <div v-for="item in arr">{{item}}</div> -->
+    <div v-for="item in arr2">{{item.name}}</div>
+    <h2>{{ num | textFilter}}</h2>
   </div>
 </template>
 
 <script>
+import Vue from "vue";
+import mixins from '../mixins';
+
 export default {
   name: "HelloWorld",
   data() {
     return {
-      num: 1,
-      isShow:true
+      isShow:true,
+      arr:[1,2,3],
+      arr2:[{
+        name:"xiaoming"
+      }],
+      _num:2
     };
   },
+  mixins:[mixins],
   props: {
     msg: String,
+    fn:Function
   },
+  // props: ["msg"],
   a: 2,
   methods: {
     changeMsg(){
-      this.isShow = !this.isShow;
+      // this.isShow = !this.isShow;
       
-      this.$nextTick(()=>{
-        this.$refs.input888.focus();
-      })
+      // this.$nextTick(()=>{
+      //   this.$refs.input888.focus();
+      // })
+    }
+  },
+  filters:{
+    textFilter(val){
+      // console.log('textFilter',this.isShow)
+      return 'textFilter -- ' + val
     }
   },
   mounted() {
-    // console.log(this.$options.a)
-    // console.log(c)
-    /*
-      问题:Vue更新状态数据是同步更新还是异步更新?
-      答案:同步更新
+    // this.num=1;
+    // console.log('_num',this._num)
+    this.fn(123);
+    // Vue.set(this.$data,num,1);
 
-      问题二:Vue更新视图是同步更新还是异步更新?
-      答案:异步更新
+    // 数组的下标没有经过数据劫持
+    // this.arr[2] = 6;
 
-      问题三:如何等视图更新成功之后,再执行某段代码?
-      答案:使用nextTick,将一个回调函数作为实参传入nextTick,那么该回调函数就会在DOM更新之后才执行
+    // this.arr.splice(2,1,6);
 
-      研究问题:nextTick是如何做到将一个函数延迟执行的?
-      答案:根据案例分析,nextTick应该是开启了一个微任务
-    */
-    // this.num = 2;
-    // debugger;
-    // this.$nextTick(() => {
-    //   console.log(this.num);
-      // debugger;
-    // });
+    // this.arr2[0].name = "xiaowang";
 
+    // delete this.num;
+    // console.log(this)
 
-    // this.isShow = false;
-    
-
-    // Promise.resolve().then(()=>{
-    //   console.log('1');
-    // })
-
-    // this.$nextTick(() => {
-    //   console.log('2');
-    // });
-
-    // Promise.resolve().then(()=>{
-    //   console.log('3');
-    // })
-
-    // this.$nextTick(() => {
-    //   console.log('4');
-    // });
-
-
-    // setTimeout(()=>{
-    //   console.log('setTimeout')
-    // },0)
+    console.log(this.$options.name)
   },
 };
 </script>
