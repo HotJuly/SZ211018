@@ -16,3 +16,38 @@
 
 		父组件传递给子组件的是函数
 
+2.provide/inject
+	适用于祖孙组件通信
+	祖先向后代传参:
+		1.父组件在配置对象中,添加provide属性,以及属性值
+		2.子组件在配置对象中,添加inject属性,用于接收祖先组件传递下来的数据
+		3.该属性就可以当做props进行使用
+
+	注意点:
+		1.inject向上查找数据的时候,会使用最近的满足条件的provide
+		2.默认情况下provide暴露出去的数据不是响应式的
+			如果想要实现响应式效果,必须提前准备好一个响应式对象
+
+3.自定义事件
+
+	v-model
+		对input框进行使用
+			1.将指令的值作为默认值在input框中进行显示(属性名:value)
+				    <input type="text" :value="num">
+			2.当用户修改input框中的数据时,对应的状态数据会同步发生变化(事件名:input)
+				     <input type="text" :value="num" @input="(event)=>{num=event.target.value}">
+
+		对组件进行使用
+			1.将指令的值作为标签属性值传递给子组件(默认属性名:value)
+				<HelloWrold :value="msg"/>
+			2.给子组件绑定自定义事件(默认事件名:input)
+    				<HelloWorld :value="msg" @input="(data)=>msg=data" :fn="changeMsg"/>
+
+			model属性可以实现对v-model的标签属性以及事件名进行自定义的操作
+
+
+
+
+
+
+
