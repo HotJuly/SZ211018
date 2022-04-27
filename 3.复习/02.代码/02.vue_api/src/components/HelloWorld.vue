@@ -1,7 +1,9 @@
 <template>
   <div class="hello">
     <h1>hello world!!!</h1>
-    <input type="text" :value="num" @input="changeNum">
+    <slot name="default"></slot>
+    <slot name="content"></slot>
+    <slot name="footer" :text="text"></slot>
   </div>
 </template>
 
@@ -9,16 +11,11 @@
 
 export default {
   name: "HelloWorld",
-  props:["num"],
-  methods:{
-    changeNum(event){
-      // this.num = event.target.value;
-      this.$emit('update:num',event.target.value)
+  data(){
+    return{
+      text:"欢迎光临"
     }
-  },
-  created(){
-    // this.$bus.$emit('getData',123)
-  },
+  }
 };
 </script>
 
