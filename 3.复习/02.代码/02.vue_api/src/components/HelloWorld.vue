@@ -74,8 +74,10 @@ export default {
 
     // console.log(this.$options.name)
     // console.log(this.text)
+    // console.log(this.$parent.a)
+    // console.log(this.$root.msg)
   },
-  inject:["text","user"],
+  // inject:["text","user"],
   model: {
     prop: 'msg',
     event: 'input666'
