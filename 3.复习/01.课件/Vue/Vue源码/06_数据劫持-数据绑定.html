@@ -6,7 +6,8 @@
 </head>
   <body>
     <div id="app">
-      <p>{{msg}}</p>
+      <p v-on:click="clickHandler">{{msg}}</p>
+      <p>{{person.age}}</p>
     </div>
     <script src="./js/observer.js"></script>
     <script src="./js/watcher.js"></script>
@@ -31,6 +32,11 @@
             name:"xiaoming",
             msg:"123"
           },
+        },
+        methods:{
+          clickHandler(){
+            console.log('clickHandler')
+          }
         }
       });
 

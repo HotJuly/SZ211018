@@ -61,7 +61,7 @@ function MVVM(options) {
             3.在构造调用的过程中,Observe函数会获取到data的所有直系属性名,并进行遍历,执行defineReactive
             4.在defineReactive方法中
                 -创建对应的dep对象
-                    每个属性都会有一个对应的dep对象
+                    每个响应式属性都会有一个对应的dep对象
                 -会将当前执行数据劫持的该属性的属性值传入observe,进行深度数据劫持
                     对data对象中所有的属性都进行数据劫持,此处具有隐式递归
                     如果属性值是对象的话,就会递归回到流程1
@@ -90,7 +90,28 @@ function MVVM(options) {
     observe(data, this);
     // observe(data, vm);
     
+    /*
+        第三部分:模版解析
+        目的:
+            1.解析模版中的指令和插值语法,将其解析为对应的内容,并在页面上进行展示
+            2.为了后续响应式的实现进行准备工作
+        流程:
+            1.调用Compile函数,用于创建解析器实例对象,同时将配置对象中的el元素传入进去
+                在此处会判断el是不是元素节点,如果不是就去找到该节点
+            2.将el元素中所有的直系子节点全部移入文档碎片中,方便后续进行解析
+            3.调用init方法,开始解析文档碎片模版
+            4.获取到文档碎片中所有的子节点,并进行遍历判断
+                如果是元素节点,使用compilerElement方法,解析该节点
+                    此处主要目的是为了解析该元素节点的标签属性(也就是为了解析Vue指令)
+                如果是文本节点,使用compilerText方法,解析该节点
+                    获取到插值语法中的表达式内容,交给bind函数
+            5.bind函数会将对应的节点以及数据,都交给指定的更新器进行对应更新
+                每次调用bind都会创建一个watcher对象
+                    每个插值语法对应着一个watcher对象
+                注意点:Vue1只会针对于某些需要更新的组件,进行更新,不会出现大面积更新
+    */
     this.$compile = new Compile(options.el || document.body, this)
+    // vm.$compile = new Compile("#app", vm)
 }
 
 MVVM.prototype = {
