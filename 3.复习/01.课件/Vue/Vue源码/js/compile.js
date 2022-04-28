@@ -7,10 +7,13 @@ function Compile(el, vm) {
     if (this.$el) {
         this.$fragment = this.node2Fragment(this.$el);
 
+        // 此处就是beforeMount的执行时机
+
         this.init();
 
         this.$el.appendChild(this.$fragment);
 
+        // 此处就是mounted的执行时机
     }
 }
 

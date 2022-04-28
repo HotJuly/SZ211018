@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app"  class="B">
     <!-- <HelloWorldVue/> -->
     <!-- <HelloWorldVue>
       <template>
@@ -42,6 +42,24 @@ export default {
         "https://fuss10.elemecdn.com/1/8e/aeffeb4de74e2fde4bd74fc7b4486jpeg.jpeg",
       ],
     };
+  },
+  beforeCreate(){
+    // console.log(this,this.$data,this.url,this.$el)
+    console.log('-------beforeCreate-------')
+  },
+  created(){
+    // console.log(this,this.$data,this.url,this.$el)
+    console.log('-------created-------')
+  },
+  beforeMount(){
+    // console.log(this,this.$data,this.url,this.$el)
+    console.log(this.$vnode,this._vnode)
+    console.log('-------beforeMount-------')
+  },
+  mounted(){
+    // console.log(this,this.$data,this.url,this.$el)
+    console.log(this.$vnode,this._vnode)
+    console.log('-------mounted-------')
   }
 };
 </script>
