@@ -185,7 +185,11 @@ var compileUtil = {
         // updaterFn && updaterFn(text节点, this._getVMVal(vm, "msg"));
         // updaterFn && updaterFn(text节点, "hello mvvm");
 
-        // new Watcher(vm, exp, function(value, oldValue) {
+        new Watcher(vm, exp, function(value, oldValue) {
+            updaterFn && updaterFn(node, value, oldValue);
+        });
+
+        // new Watcher(vm, "msg", function(value, oldValue) {
         //     updaterFn && updaterFn(node, value, oldValue);
         // });
         

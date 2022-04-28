@@ -96,7 +96,7 @@ Observer.prototype = {
             例子2:此情况name是响应式的
                 this.msg={name:123}
         */
-        //         childObj = observe(newVal);
+        //  childObj = observe(newVal);
                 
         //  dep.notify会通知视图更新
         //         dep.notify();
@@ -126,12 +126,15 @@ function Dep() {
 
 Dep.prototype = {
     addSub: function(sub) {
+        // dep.addSub(watcher);
         this.subs.push(sub);
+        // this.subs.push(watcher);
 
     },
 
     depend: function() {
         Dep.target.addDep(this);
+        // watcher.addDep(dep);
     },
 
     removeSub: function(sub) {
@@ -145,6 +148,10 @@ Dep.prototype = {
         this.subs.forEach(function(sub) {
             sub.update();
         });
+
+        // this.subs.forEach(function(sub) {
+        //     watcher.update();
+        // });
     }
 };
 

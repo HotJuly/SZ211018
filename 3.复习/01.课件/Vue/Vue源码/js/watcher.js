@@ -1,4 +1,8 @@
 function Watcher(vm, exp, cb) {
+    // new Watcher(vm, "msg", function(value, oldValue) {
+    //     textUpdater && textUpdater(node, value, oldValue);
+    // });
+    // this->watcher对象
     this.cb = cb;
     this.vm = vm;
     this.exp = exp;
@@ -11,6 +15,8 @@ Watcher.prototype = {
         this.run();
     },
     run: function() {
+        // 对dep和watcher对象的映射关系进行重新建立
+        // 同时获取到当前最新的数据结果
         var value = this.get();
 
         var oldVal = this.value;
@@ -36,14 +42,18 @@ Watcher.prototype = {
         // 例如：当前watcher的是'child.child.name', 那么child, child.child, child.child.name这三个属性的dep都会加入当前watcher
         
         if (!this.depIds.hasOwnProperty(dep.id)) {
+            // watcher对象身上的depIds对象会记录与他相关的dep对象
+            // 每个插值语法可以找到与他相关响应式属性
             this.depIds[dep.id] = dep;
 
 
             dep.addSub(this);
+            // dep.addSub(watcher);
         }
     },
     get: function() {
         Dep.target = this;
+        // Dep.target = watcher对象;
 
         var value = this.getVMVal();
         Dep.target = null;
@@ -52,12 +62,17 @@ Watcher.prototype = {
 
     getVMVal: function() {
         var exp = this.exp.split('.');
+        // var exp = ["msg"];
 
         var val = this.vm._data;
 
         exp.forEach(function(k) {
             val = val[k];
         });
+
+        // exp.forEach(function(k) {
+        //     val = vm._data["msg"];
+        // });
         return val;
     }
 };
