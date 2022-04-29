@@ -29,6 +29,24 @@ Vue.prototype.$API = API;
 //   }
 // }
 
+Vue.directive('has-permission',{
+  inserted(el,{value}){
+    // 当前函数,会在标签插入到页面上的时候触发
+    // 想让一个标签不显示,我把这个标签从页面上删除
+
+    // value就是当前按钮想要显示,所需要的权限
+    // 当前账号拥有的权限,存在了store对象中
+    
+    const buttons = store.state.user.buttons;
+    // const result = buttons.includes(value);
+    const result = buttons[value];
+    if(!result){
+      // 如果没有权限使用该按钮,就要将该按钮删除
+      el.parentNode.removeChild(el);
+    }
+  }
+})
+
 import '@/icons' // icon
 import '@/permission' // permission control
 

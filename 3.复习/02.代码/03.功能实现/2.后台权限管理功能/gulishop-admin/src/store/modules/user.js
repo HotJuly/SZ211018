@@ -3,6 +3,8 @@ import { getToken, setToken, removeToken } from '@/utils/auth'
 import router, { resetRouter , asyncRoutes , anyRoutes ,constantRoutes } from '@/router'
 
 import deepFilterRoutes from '@/utils/deepFilterRoutes';
+import mapButtons from '@/utils/mapButtons';
+
 
 const getDefaultState = () => {
   return {
@@ -13,7 +15,12 @@ const getDefaultState = () => {
     routeNames:[],
 
     // 用于控制左侧导航栏的列表显示
-    routes:[]
+    routes:[],
+
+    // 用于存储用户当前的按钮级的权限信息
+    // buttons使用数组的话,查找权限会很浪费性能,所以换成对象
+    // buttons:[]
+    buttons:{}
   }
 }
 
@@ -35,6 +42,7 @@ const mutations = {
   SET_PERMISSION:(state,data)=>{
     // 用于收集当前账号所有的权限信息
     state.routeName = data.routes;
+    state.buttons = mapButtons(data.buttons);
 
     // 使用异步路由配合服务器返回的路由名称数组,过滤得到用户真正能访问的异步路由数组
     const newAsyncRoutes = deepFilterRoutes(asyncRoutes,data.routes);
