@@ -2,7 +2,8 @@
   <div id="app"  class="B">
    app
     <router-view></router-view>
-    <router-link to="/home">toHome</router-link>
+    <!-- <router-link tag="li" to="/home">toHome</router-link> -->
+    <router-link tag="a" to="/home">toHome</router-link>
     <!-- <router-link to="/about">toAbout</router-link> -->
     <button @click="toAbout">toAbout</button>
   </div>
@@ -17,7 +18,8 @@ export default {
   },
   methods:{
     toAbout(){
-      this.$router.push('/about')
+      // this.$router.push('/about')
+      this.$router.replace('/about')
     }
   }
 };
