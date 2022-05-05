@@ -1,10 +1,11 @@
 <template>
   <div class="hello">
+    <button @click="clickHandler">点击</button>
   </div>
 </template>
 
 <script>
-import {useStore} from 'vuex';
+import myBus from '../myBus';
 export default {
   name: "HelloWorld"
 };
@@ -12,10 +13,9 @@ export default {
 </script>
 
 <script setup>
-const store = useStore();
-console.log(1,store.state.initData)
-store.commit('CHANGEINITDATA',123)
-console.log(2,store.state.initData)
+const clickHandler = ()=>{
+  myBus.emit('output','hello app')
+}
 </script>
 
 <style scoped></style>

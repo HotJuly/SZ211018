@@ -1,10 +1,12 @@
 <template>
   <div class="hello">
+    <slot></slot>
+    <slot name="header"></slot>
+    <slot name="footer" :msg="msg"></slot>
   </div>
 </template>
 
 <script>
-import {useStore} from 'vuex';
 export default {
   name: "HelloWorld"
 };
@@ -12,10 +14,7 @@ export default {
 </script>
 
 <script setup>
-const store = useStore();
-console.log(1,store.state.initData)
-store.commit('CHANGEINITDATA',123)
-console.log(2,store.state.initData)
+const msg = "hello"
 </script>
 
 <style scoped></style>
